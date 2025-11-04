@@ -1,0 +1,318 @@
+/* Reset y estilos base */
+* {
+    margin: 0;
+    padding: 10px 0px 10px 10px;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-image: linear-gradient(rgba(26, 16, 16, 0.744),
+            rgba(13, 11, 11, 0.66)), url('imagenes/fondo.jpg');
+    background-size: cover;
+}
+
+/* Header */
+header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 100px 10px 100px;
+}
+
+.logo-container {
+
+    flex-shrink: 0;
+}
+
+.logo {
+
+    height: 200px;
+    width: auto;
+}
+
+.header-text {
+    flex-grow: 1;
+}
+
+.header-text h1 {
+    margin: -10px 0px -10px -120px;
+    color: #097f19;
+    text-align: center;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 100px;
+}
+
+.header-text p {
+    margin: -5px 0px -10px -120px;
+    color: #ffffff;
+    text-align: center;
+
+}
+
+/* Navegación */
+nav {
+    padding: 10px 130px 10px 130px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+
+}
+
+
+
+nav a:hover {
+    background: #ce6e33;
+    border-radius: 4px;
+}
+
+.inicio-sesion {
+
+    margin-left: auto;
+
+}
+
+
+.inicio-sesion a {
+    color: #ddd;
+    background: #147553;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s;
+}
+
+.inicio a {
+    color: #35424a;
+    background: #ffffff;
+    border-radius: 6px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s;
+}
+
+.nosotros a {
+    color: #35424a;
+    background: #ffffff;
+    border-radius: 6px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s;
+}
+
+.servicios a {
+    color: #35424a;
+    background: #ffffff;
+    border-radius: 6px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s;
+}
+
+.contacto a {
+    color: #35424a;
+    background: #ffffff;
+    border-radius: 6px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s;
+}
+
+/* Contenedor principal */
+
+.container {
+    width: 87%;
+    margin: auto;
+    padding: 0px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.fondo {
+
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    padding: auto;
+    margin: auto;
+
+
+
+}
+
+.fondo-imagenes {
+    padding: auto;
+    margin: 10px 10px 10px 10px;
+    clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%);
+    position: relative;
+    width: 1000px;
+    height: 400px;
+    filter: grayscale(50%) brightness(60%) opacity(100%);
+
+}
+
+.slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+
+}
+
+.slide.active {
+    opacity: 1;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Texto encima */
+.fondo-texto {
+
+    position: absolute;
+
+    right: 5%;
+    /* Ajusta este valor según necesites */
+    transform: translateY(-50%);
+    /* Solo vertical */
+    color: rgb(69, 245, 0);
+    text-align: center;
+    top: 50%;
+    z-index: 10;
+    width: 40%;
+    font-size: 300;
+    /* Ancho máximo para el texto */
+    text-shadow: 2px 2px 4px rgba(10, 3, 2, 1);
+}
+
+.poligono {
+    padding: 10px;
+    margin: 30px 60px;
+    width: 500px;
+    height: 300px;
+    clip-path: polygon(75% 0%, 100% 50%, 75% 100%, 0% 100%, 25% 50%, 0% 0%);
+    overflow: hidden;
+    filter: grayscale(0%) brightness(170%) opacity(100%);
+    /* Importante para que la imagen no se salga */
+}
+
+.imge {
+    width: 100%;
+    height: 100%;
+}
+
+.imge img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Para que la imagen cubra todo el polígono */
+}
+
+.registrate {
+    background: #15b825;
+    /* Mismo color que tu nav */
+    color: rgb(255, 255, 255);
+    border: none;
+    padding: 12px 30px;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 1s ease;
+    text-shadow: 1px 1px 2px rgba(7, 17, 5, 0.612);
+
+}
+
+
+.columnas-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    padding: 50px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.columna {
+    flex: 1;
+    background: rgba(53, 199, 37, 0.409);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.columna h3 {
+    color: #177826;
+    /* Usa tu color naranja */
+    margin-bottom: 15px;
+    font-size: 24px;
+}
+
+.columna p {
+    color: #333;
+    line-height: 1.6;
+}
+
+.icono {
+    display: grid;
+    gap: 1em;
+    justify-items: center;
+    width: 40px;
+    overflow: hidden;
+    margin: auto;
+
+
+}
+
+
+/* Footer */
+footer {
+    background: #35424a;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    margin-top: 2rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+        padding: 1rem;
+    }
+
+    nav ul {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .servicios-grid {
+        grid-template-columns: 1fr;
+    }
+}
