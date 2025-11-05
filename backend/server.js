@@ -4,6 +4,14 @@ import axios from "axios";
 import dotenv from "dotenv";
 import cors from "cors";
 
+import session from "express-session";
+import cookieParser from "cookie-parser";
+import authRoutes from "./routes/authRoutes.js";
+
+
+
+
+
 dotenv.config();
 const app = express();
 
@@ -11,8 +19,21 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+app.use(cookieParser());
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "unasecretosegura123",
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false },
+  })
+);
+
 const OPENPROJECT_URL = process.env.OPENPROJECT_URL;
 const API_KEY = process.env.OPENPROJECT_API_KEY;
+
+// RUTA DE AUTENTICACIÓN
+app.use("/auth", authRoutes);
 
 // Ruta para crear usuario en OpenProject
 app.post("/create-user", async (req, res) => {
@@ -65,8 +86,14 @@ app.post("/create-user", async (req, res) => {
   }
 });
 
+// RUTA PARA TEST
+app.get("/", (req, res) => {
+  res.send("Servidor backend OpenProject activo");
+});
+
+
 // Iniciar servidor
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
-  console.log(`✅ Servidor backend escuchando en puerto ${PORT}`);
+  console.log(`Servidor backend escuchando en puerto ${PORT}`);
 });
