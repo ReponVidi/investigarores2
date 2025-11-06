@@ -11,20 +11,12 @@ import authRoutes from "./routes/authRoutes.js";
 import path from "path";
 import { fileURLToPath } from "url";
 
-// Necesario para usar rutas absolutas
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Sirve los archivos del frontend
-app.use(express.static(path.join(__dirname, "../frontend")));
-
-// Ruta principal → index.html
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/ppricipal/pprincipal.html"));
-});
-
 dotenv.config();
 const app = express();
+
+// Necesario para obtener rutas absolutas correctamente en ESModules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Configuración
 app.use(express.json());
@@ -42,6 +34,19 @@ app.use(
 
 const OPENPROJECT_URL = process.env.OPENPROJECT_URL;
 const API_KEY = process.env.OPENPROJECT_API_KEY;
+
+// Servir archivos estáticos del frontend
+app.use("/inicio_sesion", express.static(path.join(__dirname, "../frontend/inicio_sesion")));
+app.use(express.static(path.join(__dirname, "../frontend/ppricipal")));
+
+// Ruta raíz (home) -> devuelve la página principal
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/ppricipal/pprincipal.html"));
+});
+
+app.get("/inicio_sesion", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/inicio_sesion/inicio.html"));
+});
 
 // RUTA DE AUTENTICACIÓN
 app.use("/auth", authRoutes);
