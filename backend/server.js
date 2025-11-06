@@ -8,9 +8,20 @@ import session from "express-session";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/authRoutes.js";
 
+import path from "path";
+import { fileURLToPath } from "url";
 
+// Necesario para usar rutas absolutas
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
+// Sirve los archivos del frontend
+app.use(express.static(path.join(__dirname, "../frontend")));
 
+// Ruta principal → index.html
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/ppricipal/pprincipal.html"));
+});
 
 dotenv.config();
 const app = express();
