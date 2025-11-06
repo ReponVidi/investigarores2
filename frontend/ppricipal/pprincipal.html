@@ -29,7 +29,7 @@
             <li class="nosotros"><a href="#nosotros">Nosotros</a></li>
             <li class="servicios"><a href="#servicios">Servicios</a></li>
             <li class="contacto"><a href="#contacto">Contacto</a></li>
-            <li class="inicio-sesion"><a href="http://localhost:4000/auth/openprojec">Inicio de sesión</a></li>
+            <li class="inicio-sesion"><a href="#" id="loginBtn">Inicio de sesión</a></li>
         </ul>
         <div id="userLoggedIn" style="display: none;">
             <div class="user-welcome">
@@ -118,6 +118,13 @@
         </footer>
 
         <script src="script.js"></script>
+
+        <script>
+            document.getElementById("loginBtn").addEventListener("click", () => {
+                window.location.href = "http://localhost:4000/auth/openproject";
+            });
+        </script>
+        
 </body>
 
 </html>
