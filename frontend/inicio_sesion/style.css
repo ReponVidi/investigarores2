@@ -1,6 +1,7 @@
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #f3f6fa;
+  background-image: url(imagenes/fondo.jpg);
+  background-size: cover;
   color: #222;
   display: flex;
   justify-content: center;
@@ -20,7 +21,7 @@ body {
 }
 
 h1 {
-  color: #1a73e8;
+  color: #1c8328;
   margin-bottom: 0.5rem;
 }
 
@@ -50,24 +51,24 @@ input {
 }
 
 input:focus {
-  border-color: #1a73e8;
+  border-color: #117429;
   outline: none;
 }
 
 .btn {
   width: 100%;
-  background: #1a73e8;
+  background: #0d7821;
   color: white;
   border: none;
   padding: 0.8rem;
   font-size: 1rem;
   border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background-color 0.3s;
 }
 
 .btn:hover {
-  background: #155ec2;
+  background: #13bd32;
 }
 
 .message {

@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VIDI</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="responsive.css">
     <link rel="shortcut icon" href="imagenes/lupa.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
@@ -45,43 +47,40 @@
     <!-- Contenido principal -->
 
     <main class="container">
-
         <div class="fondo">
-
+            <!-- Carrusel de imágenes -->
             <div class="fondo-imagenes">
                 <div class="slide active">
                     <img src="imagenes/fondo22.jpg" alt="">
                 </div>
-                <div class="slide active">
+                <div class="slide">
                     <img src="imagenes/fondo3.jpg" alt="">
                 </div>
-                <div class="slide active">
+                <div class="slide">
                     <img src="imagenes/fondo4.jpg" alt="">
                 </div>
-                <div class="poligono">
-                    <div class="imge">
-
-                        <img src="imagenes/biblioteca.jpg" alt="">
-
-
-                    </div>
-                </div>
-                <div class="fondo-texto">
-                    <h2>REGISTRATE CON NOSOTROS Y AYUDANOS A CONSEGUIR MAS IDEAS INNOVADORAS PARA AYUDAR A PROGRESAR EL
-                        PAIS Y SU EVOLUCION</h2>
-                    <button class="registrate">
-                        registrate
-                    </button>
-
-                </div>
-
-
-
             </div>
 
+            <!-- Polígono (separado del carrusel) -->
+            <div class="poligono-container">
+                <div class="poligono">
+                    <div class="imge">
+                        <img src="imagenes/biblioteca.jpg" alt="">
+                    </div>
+                </div>
+            </div>
 
-
+            <!-- Texto y botón (separados) -->
+            <div class="fondo-texto">
+                <h2>REGISTRATE CON NOSOTROS Y AYUDANOS A CONSEGUIR MAS IDEAS INNOVADORAS PARA AYUDAR A PROGRESAR EL PAIS
+                    Y SU EVOLUCION</h2>
+                <button class="registrate">
+                    Registrate
+                </button>
+            </div>
         </div>
+
+
         <div class="columnas-container">
             <div class="columna">
                 <h3>MISION</h3>
@@ -103,21 +102,24 @@
 
             <div class="columna">
                 <h3>BLOG</h3>
-                <p>"Sigue el progreso de proyectos, encuentra co-investigadores y comparte avances.Conecta con colegas,
+                <img src="imagenes/menseje.png" alt="" class="icono">
+                <p>"Sigue el progreso de proyectos, encuentra co-investigadores y comparte avances.Conecta con
+                    colegas,
                     descubre sinergias y haz crecer tu investigación"</p>
 
             </div>
         </div>
+    </main>
 
 
 
 
-        <!-- Pie de página -->
-        <footer>
-            <p>&copy; 2024 Mi Sitio Web. Todos los derechos reservados.</p>
-        </footer>
+    <!-- Pie de página -->
+    <footer>
+        <p>&copy; 2024 Mi Sitio Web. Todos los derechos reservados.</p>
+    </footer>
 
-        <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>
