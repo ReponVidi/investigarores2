@@ -41,6 +41,7 @@
       </div>
 
       <button type="submit" class="btn">Crear Usuario</button>
+      <button type="button" id="loginOpenProject" class="btn">Iniciar sesión con OpenProject</button>
     </form>
 
     <div id="message" class="message"></div>
@@ -54,6 +55,12 @@
   </div>
 
   <script src="script.js"></script>
+  <script>
+      document.getElementById("loginOpenProject").addEventListener("click", () => {
+        window.location.href = "http://localhost:4000/auth/openproject";
+      });
+  </script>
+
 </body>
 
 </html>

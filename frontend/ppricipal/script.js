@@ -188,3 +188,6 @@ if (isTouchDevice()) {
         element.style.minWidth = '44px';
     });
 }
+document.getElementById("loginBtn").addEventListener("click", () => {
+    window.location.href = "http://localhost:4000/auth/openproject";
+});
