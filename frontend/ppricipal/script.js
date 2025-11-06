@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // Función para obtener datos del usuario desde el backend
 async function getUserData() {
     try {
-        const response = await fetch('http://localhost:3000/auth/me', {
+        const response = await fetch('http://localhost:4000/auth/me', {
             credentials: 'include' // Importante: incluye cookies de sesión
         });
 
