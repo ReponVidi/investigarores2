@@ -36,3 +36,7 @@ form.addEventListener('submit', async (e) => {
     messageDiv.className = "message error";
   }
 });
+
+function mostrarExito() {
+  document.getElementById('mensajeExito').style.display = 'block';
+}

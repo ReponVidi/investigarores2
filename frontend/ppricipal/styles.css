@@ -54,7 +54,8 @@ header {
 
 /* Navegación */
 nav {
-    padding: 10px 130px 10px 130px;
+    padding: 10px 80px 10px 70px;
+
 }
 
 nav ul {
@@ -67,7 +68,7 @@ nav ul {
 
 
 nav a:hover {
-    background: #ce6e33;
+    background: #269110;
     border-radius: 4px;
 }
 
@@ -97,7 +98,7 @@ nav a:hover {
     text-decoration: none;
     font-size: 20px;
     font-weight: 600;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 2.1rem;
     transition: background-color 0.3s;
 }
 
@@ -315,4 +316,35 @@ footer {
     .servicios-grid {
         grid-template-columns: 1fr;
     }
+}
+
+.user-welcome {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.btn-logout {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-logout:hover {
+    background: #c82333;
+}
+
+.btn-login {
+    background: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    text-decoration: none;
 }
