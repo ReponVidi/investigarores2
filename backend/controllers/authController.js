@@ -45,7 +45,7 @@ export const handleOpenProjectCallback = async (req, res) => {
     req.session.user = user;
     req.session.access_token = access_token;
 
-    res.redirect("http://localhost:3000/dashboard"); // Frontend
+    res.redirect("http://localhost:4000/usuario/usuario.html"); // Frontend
   } catch (error) {
     console.error("❌ Error autenticando:", error.message);
     res.status(500).send("Error autenticando con OpenProject.");
@@ -60,6 +60,19 @@ export const getUserSession = (req, res) => {
 
 // Cierra sesión
 export const logoutUser = (req, res) => {
-  req.session.destroy();
-  res.send("Sesión cerrada correctamente");
+    // 1. Destruir la sesión local (tu aplicación)
+    req.session.destroy(err => {
+        if (err) {
+            console.error("Error al destruir la sesión:", err);
+            return res.status(500).send("Error al cerrar sesión localmente.");
+        }
+        
+        // 2. Redirigir al endpoint de logout de OpenProject
+        // NOTA: Esta URL de logout varía según la configuración de OpenProject.
+        // Asumiendo que OpenProject usa el estándar para invalidar la sesión web.
+        const openProjectLogoutURL = `${process.env.OPENPROJECT_URL}/auth/logout?redirect_uri=http://localhost:4000/inicio_sesion`;
+        
+        // Redirige al navegador a OpenProject, que luego lo devuelve al inicio de tu app.
+        res.redirect(openProjectLogoutURL);
+    });
 };

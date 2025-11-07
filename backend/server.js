@@ -38,6 +38,7 @@ const API_KEY = process.env.OPENPROJECT_API_KEY;
 // Servir archivos estáticos del frontend
 app.use("/inicio_sesion", express.static(path.join(__dirname, "../frontend/inicio_sesion")));
 app.use(express.static(path.join(__dirname, "../frontend/ppricipal")));
+app.use(express.static(path.join(__dirname, "../frontend")));
 
 // Ruta raíz (home) -> devuelve la página principal
 app.get("/", (req, res) => {
@@ -103,9 +104,9 @@ app.post("/create-user", async (req, res) => {
 });
 
 // RUTA PARA TEST
-app.get("/", (req, res) => {
-  res.send("Servidor backend OpenProject activo");
-});
+//app.get("/", (req, res) => {
+  //res.send("Servidor backend OpenProject activo");
+//});
 
 
 // Iniciar servidor
