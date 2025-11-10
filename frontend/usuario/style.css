@@ -1,81 +1,85 @@
 /* ===============================
-   Panel de Usuario - OpenProject
+   Panel de Usuario - Estilo Integrado
    =============================== */
 
 /* Reset básico */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* Usa la fuente Arial/sans-serif como en pprincipal.css */
+    font-family: Arial, sans-serif; 
 }
 
-/* Fondo general */
+/* Fondo general similar a body en pprincipal.css */
 body {
-  background: linear-gradient(135deg, #2c3e50, #4ca1af);
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
+    /* Mismo fondo degradado y de imagen que el fondo de tu sitio */
+    background-image: linear-gradient(rgba(26, 16, 16, 0.744),
+            rgba(13, 11, 11, 0.66)), url('imagenes/fondo.jpg');
+    background-size: cover;
+    background-attachment: fixed; /* Opcional: para que la imagen de fondo se quede fija */
+    line-height: 1.6;
+    color: #333; /* Texto oscuro para el contenido principal */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
-/* Contenedor principal */
+/* Contenedor principal similar al .container de pprincipal.css */
 .container {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  padding: 40px 50px;
-  border-radius: 15px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-  text-align: center;
-  width: 400px;
-  animation: fadeIn 0.7s ease-in-out;
-}
-
-/* Animación de aparición */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+    background: #fff; /* Fondo blanco para el contenido */
+    padding: 40px 50px;
+    border-radius: 8px; /* Borde suave */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    text-align: center;
+    width: 90%;
+    max-width: 500px;
+    margin: 20px auto;
 }
 
 /* Título */
 .container h1 {
-  font-size: 1.8rem;
-  margin-bottom: 15px;
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+    color: #097f19; /* Color verde/azul fuerte de tu sitio */
+    font-family: 'Times New Roman', Times, serif; /* Si usas esa fuente para títulos */
 }
 
 /* Info del usuario */
 #user-info {
-  margin: 20px 0;
-  font-size: 1.1rem;
-  color: #e8e8e8;
+    margin: 20px 0 30px 0;
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.8;
 }
 
-/* Botón de cierre de sesión */
+/* Botón de cierre de sesión (similar a .registrate en pprincipal) */
 #logoutBtn {
-  background-color: #e74c3c;
-  color: #fff;
-  border: none;
-  padding: 12px 20px;
-  font-size: 1rem;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
+    /* Color de botón primario de tu sitio */
+    background: #228d3e; 
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1.1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 #logoutBtn:hover {
-  background-color: #c0392b;
-  transform: scale(1.05);
+    background: #13bd32; /* Tono más claro al pasar el ratón */
+    transform: translateY(-2px);
 }
 
 /* Responsive */
 @media (max-width: 500px) {
-  .container {
-    width: 90%;
-    padding: 25px;
-  }
+    .container {
+        width: 95%;
+        padding: 25px;
+    }
 
-  .container h1 {
-    font-size: 1.4rem;
-  }
+    .container h1 {
+        font-size: 1.4rem;
+    }
 }

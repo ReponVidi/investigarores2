@@ -32,13 +32,16 @@ app.use(
   })
 );
 
-const OPENPROJECT_URL = process.env.OPENPROJECT_URL;
-const API_KEY = process.env.OPENPROJECT_API_KEY;
+
+//Aqui Habian Variables de Entornos no necesarias
+
 
 // Servir archivos estáticos del frontend
 app.use("/inicio_sesion", express.static(path.join(__dirname, "../frontend/inicio_sesion")));
 app.use(express.static(path.join(__dirname, "../frontend/ppricipal")));
 app.use(express.static(path.join(__dirname, "../frontend")));
+
+
 
 // Ruta raíz (home) -> devuelve la página principal
 app.get("/", (req, res) => {
@@ -49,8 +52,37 @@ app.get("/inicio_sesion", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/inicio_sesion/inicio.html"));
 });
 
+
+
+// Ruta de redirección intermedia tras el logout de OpenProject
+app.get("/post_logout_principal", (req, res) => {
+    // URL de destino final: Tu página principal
+    const finalURL = 'http://localhost:4000/ppricipal/pprincipal.html'; 
+    
+    // El script de JavaScript obliga al navegador a redirigirse inmediatamente
+    res.send(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Cerrando Sesión...</title>
+            <script>
+                // OBLIGA a la redirección a tu página principal
+                window.location.href = '${finalURL}';
+            </script>
+        </head>
+        <body>
+            <p>Sesión cerrada con éxito. Redirigiendo...</p>
+        </body>
+        </html>
+    `);
+});
+
+
+
 // RUTA DE AUTENTICACIÓN
 app.use("/auth", authRoutes);
+
+
 
 // Ruta para crear usuario en OpenProject
 app.post("/create-user", async (req, res) => {
@@ -76,6 +108,7 @@ app.post("/create-user", async (req, res) => {
     // Autenticación con API key
     const authHeader = `Basic ${Buffer.from(`apikey:${API_KEY}`).toString("base64")}`;
 
+
     // Petición a OpenProject
     const response = await axios.post(`${OPENPROJECT_URL}/api/v3/users`, userPayload, {
       headers: {
@@ -85,6 +118,7 @@ app.post("/create-user", async (req, res) => {
       timeout: 10000, // seguridad
     });
 
+    
     // Éxito
     return res.status(201).json({
       message: "Usuario creado exitosamente en OpenProject.",

@@ -6,6 +6,8 @@ import {
   logoutUser,
 } from "../controllers/authController.js";
 
+
+
 const router = express.Router();
 
 router.get("/openproject", redirectToOpenProject);

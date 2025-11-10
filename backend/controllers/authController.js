@@ -58,21 +58,29 @@ export const getUserSession = (req, res) => {
   res.json(req.session.user);
 };
 
+
+
+
+
 // Cierra sesión
+// En backend/controllers/authController.js
+
 export const logoutUser = (req, res) => {
-    // 1. Destruir la sesión local (tu aplicación)
-    req.session.destroy(err => {
+    // 1. Destruir la sesión local (Tu aplicación)
+    req.session.destroy((err) => {
         if (err) {
-            console.error("Error al destruir la sesión:", err);
+            console.error("Error al destruir la sesión local:", err);
             return res.status(500).send("Error al cerrar sesión localmente.");
         }
+
+        // URL de redirección final que queremos que OpenProject use
+        const returnToURL = "http://localhost:4000/post_logout_principal";
         
-        // 2. Redirigir al endpoint de logout de OpenProject
-        // NOTA: Esta URL de logout varía según la configuración de OpenProject.
-        // Asumiendo que OpenProject usa el estándar para invalidar la sesión web.
-        const openProjectLogoutURL = `${process.env.OPENPROJECT_URL}/auth/logout?redirect_uri=http://localhost:4000/inicio_sesion`;
+        // 2. Intentar forzar la redirección usando el parámetro más probable ('return_to')
+        // Si OpenProject ignora el parámetro, el usuario se quedará en su página de logout.
+        const openProjectLogoutURL = `${process.env.OPENPROJECT_URL}/logout?return_to=${encodeURIComponent(returnToURL)}`;
         
-        // Redirige al navegador a OpenProject, que luego lo devuelve al inicio de tu app.
+        // 3. Redirigir al usuario al logout de OpenProject
         res.redirect(openProjectLogoutURL);
     });
 };

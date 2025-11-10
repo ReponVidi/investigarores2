@@ -45,18 +45,24 @@ async function getUserData() {
 // Mostrar bienvenida con datos reales
 async function showRealUserWelcome() {
     const userData = await getUserData();
+    
+    // Elementos del NAV
+    const loginLi = document.getElementById('loginLi'); // El LI que contiene "Inicio de sesión"
+    const userLoggedInDiv = document.getElementById('userLoggedIn');
+    const userNameSpan = document.getElementById('userName');
 
     if (userData) {
-        document.getElementById('userLoggedIn').style.display = 'block';
-        document.getElementById('userLoggedOut').style.display = 'none';
-
-        // Usar los datos reales del usuario
-        const userName = userData.name || userData.fullName || userData.username;
-        document.getElementById('userName').textContent =
-            `Bienvenido ${userName} a nuestra red de investigación`;
+        // USUARIO CONECTADO
+        if (loginLi) loginLi.style.display = 'none';
+        if (userLoggedInDiv) userLoggedInDiv.style.display = 'flex'; // Usar flex para mostrar
+        
+        const userName = userData.name || userData.fullName || userData.login; // Usar login si no hay nombre
+        if (userNameSpan) userNameSpan.textContent = `Bienvenido ${userName} a nuestra red de investigación`;
+        
     } else {
-        document.getElementById('userLoggedIn').style.display = 'none';
-        document.getElementById('userLoggedOut').style.display = 'block';
+        // USUARIO DESCONECTADO
+        if (loginLi) loginLi.style.display = 'list-item'; // Mostrar el LI de login
+        if (userLoggedInDiv) userLoggedInDiv.style.display = 'none';
     }
 }
 
@@ -170,24 +176,40 @@ class ResponsiveManager {
 
 // Inicializar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {
+    // 1. Manejar el clic del botón de Registro
+    const botonRegistro = document.querySelector(".registrate");
+    if (botonRegistro) {
+        botonRegistro.addEventListener("click", () => {
+            window.location.href = "../inicio_sesion/inicio.html";
+        });
+    }
+
+    // 2. Manejar el clic del botón de Login (Redirección a OpenProject)
+    const loginBtn = document.getElementById("loginBtn");
+    if (loginBtn) {
+         loginBtn.addEventListener("click", () => {
+             // Redirección al inicio de sesión de OpenProject
+             window.location.href = "http://localhost:4000/auth/openproject";
+         });
+    }
+    
+    // 3. Inicializa el manejador de responsividad
     new ResponsiveManager();
+    
+    // 4. Muestra la bienvenida del usuario (maneja la visibilidad de Login/Logout)
+    showRealUserWelcome(); 
+    
+    // 5. Ajustar interacciones para touch (Si usas el código de detección)
+    if (isTouchDevice()) {
+        document.body.classList.add('touch-device');
+        document.querySelectorAll('button, a').forEach(element => {
+            element.style.minHeight = '44px';
+            element.style.minWidth = '44px';
+        });
+    }
 });
 
 // Función para detectar touch device
 function isTouchDevice() {
     return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 }
-
-// Ajustar interacciones para touch
-if (isTouchDevice()) {
-    document.body.classList.add('touch-device');
-
-    // Mejorar botones para touch
-    document.querySelectorAll('button, a').forEach(element => {
-        element.style.minHeight = '44px';
-        element.style.minWidth = '44px';
-    });
-}
-document.getElementById("loginBtn").addEventListener("click", () => {
-    window.location.href = "http://localhost:4000/auth/openproject";
-});
