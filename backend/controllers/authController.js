@@ -8,8 +8,11 @@ const clientSecret = process.env.CLIENT_SECRET;
 const redirectURI = process.env.REDIRECT_URI;
 
 // Redirige al login de OpenProject
+// AÑADIDO: &prompt=login
+// Esto fuerza a OpenProject a mostrar la pantalla de login, incluso si tiene 
+// una sesión web activa, asegurando que respete el flujo OAuth y el redirect_uri.
 export const redirectToOpenProject = (req, res) => {
-  const authURL = `${openprojectURL}/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectURI}&scope=api_v3`;
+  const authURL = `${openprojectURL}/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectURI}&scope=api_v3&prompt=login`;
   res.redirect(authURL);
 };
 
