@@ -22,11 +22,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const email = userData.email || 'N/A';
 
                 userInfoElement.innerHTML = `
-                    <p>¡Hola, <strong>${firstName} ${lastName}</strong>!</p>
-                    <p>Usuario: <strong>${login}</strong></p>
-                    <p>Email: <strong>${email}</strong></p>
-                    <p>Esto es un Ejemplo de lo que se Puede lograr.</p>
-                `;
+                    <p>¡Hola, <strong>${firstName} ${lastName}</strong>!</p>`
+                 
+                ;
             } else if (response.status === 401) {
                 // Usuario no autenticado (ej. sesión expiró). Redirige a la raíz.
                 userInfoElement.innerHTML = `<p>Error: No hay sesión activa. Redirigiendo...</p>`;
@@ -61,4 +59,70 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Iniciar la carga de datos al cargar la página
     loadUserData();
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+            const bars = document.querySelectorAll('.bar');
+            bars.forEach(bar => {
+                const originalHeight = bar.style.height;
+                bar.style.height = '0%';
+                
+                setTimeout(() => {
+                    bar.style.height = originalHeight;
+                }, 300);
+            });
+            
+            // Add interactivity to menu items
+            const menuItems = document.querySelectorAll('.menu a');
+            menuItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    menuItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+
+// Script para el menú desplegable
+document.addEventListener('DOMContentLoaded', function() {
+    const userMenuTrigger = document.getElementById('userMenuTrigger');
+    const userDropdown = document.getElementById('userDropdown');
+    
+    // Alternar menú al hacer click
+    userMenuTrigger.addEventListener('click', function(e) {
+        e.stopPropagation();
+        userDropdown.classList.toggle('active');
+    });
+    
+    // Cerrar menú al hacer click fuera
+    document.addEventListener('click', function(e) {
+        if (!userMenuTrigger.contains(e.target) && !userDropdown.contains(e.target)) {
+            userDropdown.classList.remove('active');
+        }
+    });
+    
+    // Cerrar menú al seleccionar una opción
+    const dropdownItems = document.querySelectorAll('.dropdown-item');
+    dropdownItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+            e.preventDefault();
+            userDropdown.classList.remove('active');
+            
+            // Aquí puedes agregar la funcionalidad específica
+            if (this.classList.contains('logout')) {
+                alert('Cerrando sesión...');
+                // window.location.href = '/logout';
+            } else {
+                alert('Creando nuevo proyecto...');
+                // window.location.href = '/new-project';
+            }
+        });
+    });
+    
+    // Cerrar menú con la tecla Escape
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            userDropdown.classList.remove('active');
+        }
+    });
 });
