@@ -4,14 +4,65 @@
   <meta charset="UTF-8">
   <title>Panel de Usuario - OpenProject</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="shortcut icon" href="imagenes/lupa.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
-  <div class="container">
-    <h1>Bienvenido a tu panel de usuario 👋</h1>
-    <p id="user-info"></p>
-    <button id="logoutBtn">Cerrar Sesión</button>
-  </div>
 
-  <script src="script.js"></script>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <i class="fas fa-chart-line"></i>
+            <span>Bienvenidos</span>
+        </div>
+        
+        <div class="user-info">
+            <div class="user-avatar"></div>
+            <div class="user-details">
+                <p id="user-info"></p>
+            </div>
+        </div>
+        
+        <ul class="menu">
+            <li><a href="#" class="active"><i class="fas fa-home"></i>Inicio</a></li>
+            <li><a href="#"><i class="fas fa-file"></i> Proyecto</a></li>
+            <li><a href="#"><i class="fas fa-bell"></i> Notificacion</a></li>
+        </ul>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="header">
+            
+            <div class="user-actions">
+                <i class="fas fa-search"></i>
+                <i class="fas fa-cog"></i>
+                
+                <!-- Menú desplegable del usuario - MOVIDO AQUÍ -->
+                <div class="user-menu">
+                    <button class="user-trigger" id="userMenuTrigger">
+                        <i class="fas fa-user-circle"></i>
+                        <span>Administrador</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-plus-circle"></i>
+                            <span>Proyecto Nuevo</span>
+                        </a>
+                        <a href="#" class="dropdown-item logout" id="logoutBtn">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Cerrar Sesión</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Stats Cards -->
+        
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
