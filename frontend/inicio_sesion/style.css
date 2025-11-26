@@ -8,16 +8,15 @@ body {
   align-items: center;
   height: 150vh;
   margin: 0;
-  padding: 10px 300px 10px 90px;
 }
 
 .container {
   background: #fff;
-  padding: 10px 55px 10px 30px;
+  padding: 2rem 3rem;
   border-radius: 16px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 500px;
+  max-width: 420px;
   text-align: center;
 }
 
@@ -58,7 +57,6 @@ input:focus {
 
 .btn {
   width: 100%;
-  margin: 10px;
   background: #0d7821;
   color: white;
   border: none;
@@ -67,42 +65,6 @@ input:focus {
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s;
-}
-
-.boton {
-    width: 20%;
-    margin: 10px 160px 900px -100px;
-    text-decoration: none;
-    background: #0d7821;
-    color: rgb(255, 255, 255);
-    border: none;
-    padding: 20px 0px 20px 20px;
-    font-size: 1rem;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 25% 100%, 0% 50%);
-    
-    /* Nuevas propiedades para eliminar el efecto morado */
-    -webkit-tap-highlight-color: transparent;
-    outline: none;
-    -webkit-appearance: none;
-}
-
-/* Estado cuando se hace click (active) */
-.boton:active {
-    background: #0d7821; /* Mantiene el mismo color verde */
-    transform: scale(0.98); /* Opcional: efecto de presionado sutil */
-}
-
-/* Estado cuando tiene foco (después de hacer click) */
-.boton:focus {
-    outline: none;
-    box-shadow: none;
-}
-
-.boton:hover {
-    background: #13bd32;
 }
 
 .btn:hover {
