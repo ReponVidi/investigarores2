@@ -286,4 +286,44 @@ function generarPDF() {
     // Descargar PDF
     doc.save(`Ficha_Tecnica_${datos.codigoProyecto || 'UNEFA'}.pdf`);
 }
+function agregarIntegrante() {
+    const container = document.getElementById("equipoContainer");
+
+    const div = document.createElement("div");
+    div.classList.add("equipo-item");
+
+    div.innerHTML = `
+        <input type="text" name="equipoTrabajo[]" placeholder="Nombre del integrante">
+        <button type="button" class="btn-remove" onclick="eliminarIntegrante(this)">−</button>
+    `;
+
+    container.appendChild(div);
+}
+
+
+// Agregar un nuevo objetivo
+function addObjetivo() {
+    let container = document.getElementById("objetivos-especificos-container");
+
+    let div = document.createElement("div");
+    div.className = "objetivo-item";
+    div.style = "display:flex; gap:10px; margin-bottom:5px;";
+
+    div.innerHTML = `
+        <input type="text" name="objetivos_especificos[]" class="form-control" placeholder="Escribe un objetivo específico">
+        <button type="button" class="btn btn-danger remove-btn">X</button>
+    `;
+
+    container.appendChild(div);
+}
+
+// Delegación: escucha clics solo en los botones X
+document.getElementById("objetivos-especificos-container")
+        .addEventListener("click", function(e) {
+            if (e.target.classList.contains("remove-btn")) {
+                e.target.parentElement.remove();
+            }
+        });
+
+
 

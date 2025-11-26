@@ -67,9 +67,18 @@
                             <input type="text" id="tutorAcademico" name="tutorAcademico">
                         </div>
                         <div class="form-group">
-                            <label for="equipoTrabajo">Equipo de Trabajo</label>
-                            <textarea id="equipoTrabajo" name="equipoTrabajo"></textarea>
+                            <label>Equipo de Trabajo</label>
+
+                            <div id="equipoContainer" class="equipo-container">
+                                <!-- Primer campo -->
+                                <div class="equipo-item">
+                                    <input type="text" name="equipoTrabajo[]" placeholder="Nombre del integrante">
+                                    <button type="button" class="btn-add" onclick="agregarIntegrante()">+</button>
+                                </div>
+                            </div>
                         </div>
+
+
                     </div>
                 </div>
 
@@ -83,12 +92,30 @@
                             <label for="objetivoGeneral" class="required">Objetivo General</label>
                             <textarea id="objetivoGeneral" name="objetivoGeneral" required></textarea>
                         </div>
-                        <div class="form-group full-width">
-                            <label for="objetivosEspecificos">Objetivos Específicos</label>
-                            <textarea id="objetivosEspecificos" name="objetivosEspecificos"></textarea>
+                        <label>Objetivos Específicos</label>
+
+                        <div style="display:flex; gap:20px; align-items:flex-start;">
+
+                            <!-- CONTENEDOR DE OBJETIVOS -->
+                            <div id="objetivos-especificos-container" style="width:350px;">
+                                <div class="objetivo-item" style="display:flex; gap:10px; margin-bottom:5px;">
+                                    <input type="text" name="objetivos_especificos[]" class="form-control" placeholder="Escribe un objetivo específico">
+
+                                    <!-- botón X corregido -->
+                                    <button type="button" class="btn btn-danger remove-btn">X</button>
+                                </div>
+                            </div>
+
+                            <!-- BOTÓN AGREGAR -->
+                            <button type="button" 
+                                    class="btn btn-success" 
+                                    onclick="addObjetivo()" 
+                                    style="width:200px; height:150px;">
+                                Agregar
+                            </button>
+
                         </div>
-                    </div>
-                </div>
+
 
                 <!-- Sección de Recursos -->
                 <div class="form-section">
@@ -98,16 +125,14 @@
                     <div class="form-grid">
                         <div class="form-group">
                             <label for="presupuestoTotal" class="required">Presupuesto Total</label>
-                            <input type="number" id="presupuestoTotal" name="presupuestoTotal" step="0.01" required>
+
+                            <div class="input-with-suffix">
+                                <input type="number" id="presupuestoTotal" name="presupuestoTotal" step="0.01" required>
+                                <span class="suffix">Bs</span>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="moneda">Moneda</label>
-                            <select id="moneda" name="moneda">
-                                <option value="USD">Dólares (USD)</option>
-                                <option value="EUR">Euros (EUR)</option>
-                                <option value="VES" selected>Bolívares (VES)</option>
-                            </select>
-                        </div>
+
+                        
                         <div class="form-group full-width">
                             <label for="recursosMateriales">Recursos Materiales Necesarios</label>
                             <textarea id="recursosMateriales" name="recursosMateriales"></textarea>

@@ -1,0 +1,244 @@
+/* ===============================
+   ESTILOS GENERALES
+=============================== */
+body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    background: #f4f8f4; /* Verde muy claro */
+    color: #1c3b1a;
+}
+
+/* Contenedor general */
+.container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* ===============================
+   HEADER
+=============================== */
+.header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.header h1 {
+    color: #2e7d32; /* Verde medio */
+    font-size: 28px;
+    margin-bottom: 5px;
+}
+
+.header p {
+    color: #4f6f4c;
+    font-weight: 500;
+}
+
+/* ===============================
+   TITULOS DE SECCIONES
+=============================== */
+.section-title {
+    font-size: 20px;
+    background: #2e7d32;
+    color: #ffffff;
+    padding: 12px 15px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* ===============================
+   FORMULARIO
+=============================== */
+.form-container {
+    margin-top: 20px;
+}
+
+.form-section {
+    margin-bottom: 35px;
+    padding: 20px;
+    background: #f9fbf9;
+    border-left: 4px solid #2e7d32;
+    border-radius: 6px;
+}
+
+/* GRID DE CAMPOS */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 50px;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+/* GRUPOS */
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #1b3a1a;
+}
+
+.form-group .required::after {
+    content: " *";
+    color: red;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #c9d8c9;
+    font-size: 15px;
+    background: #ffffff;
+    transition: border-color 0.3s;
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: #2e7d32;
+    box-shadow: 0 0 5px rgba(46,125,50,0.3);
+}
+
+textarea {
+    min-height: 90px;
+}
+
+/* ===============================
+   BOTONES
+=============================== */
+.btn-group {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+.btn {
+    padding: 12px 18px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    border: none;
+    transition: 0.3s;
+}
+
+/* Grises */
+.btn-secondary {
+    background: #cccccc;
+    color: #333;
+}
+
+.btn-secondary:hover {
+    background: #b5b5b5;
+}
+
+/* Verde */
+.btn-primary {
+    background: #2e7d32;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background: #256629;
+}
+
+/* Verde brillante */
+.btn-success {
+    background: #43a047;
+    color: #fff;
+}
+
+.btn-success:hover {
+    background: #2f7d34;
+}
+
+/* ===============================
+   NOTAS
+=============================== */
+.form-note {
+    margin-top: 15px;
+    color: #444;
+    font-size: 14px;
+    text-align: right;
+}
+
+/* Contenedor */
+.input-with-suffix {
+    position: relative;
+    width: 100%;
+}
+
+/* Input */
+.input-with-suffix input {
+    width: 100%;
+    padding: 10px;
+    
+    padding-right: 50px; /* espacio para el Bs */
+    
+    border: 1px solid #c9d8c9;
+    border-radius: 6px;
+    font-size: 15px;
+    background: #ffffff;
+    box-sizing: border-box;
+}
+
+/* El texto "Bs" dentro del input */
+.input-with-suffix .suffix {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 15px;
+    color: #7a7a7a;   /* gris suave */
+    pointer-events: none;
+    background: none;
+}
+
+.equipo-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.equipo-item {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.equipo-item input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #c9d8c9;
+    border-radius: 6px;
+}
+
+.btn-add, .btn-remove {
+    padding: 6px 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    color: white;
+}
+
+.btn-add {
+    background-color: #2d7d2d;
+}
+
+.btn-remove {
+    background-color: #b53131;
+}
+
