@@ -7,9 +7,11 @@ import cors from "cors";
 import session from "express-session";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/authRoutes.js";
+import projectRoutes from "./routes/projectRoutes.js";
 
 import path from "path";
 import { fileURLToPath } from "url";
+
 
 dotenv.config();
 const app = express();
@@ -17,6 +19,19 @@ const app = express();
 // Necesario para obtener rutas absolutas correctamente en ESModules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// Variables de entorno
+const OPENPROJECT_URL = process.env.OPENPROJECT_URL;
+const API_KEY = process.env.OPENPROJECT_API_KEY;
+
+// Verificar variables críticas
+if (!OPENPROJECT_URL) {
+  console.error("❌ ERROR: OPENPROJECT_URL no está definida en .env");
+  process.exit(1);
+}
+if (!API_KEY) {
+  console.warn("⚠️ ADVERTENCIA: OPENPROJECT_API_KEY no está definida. La creación de usuarios fallará.");
+}
 
 // Configuración
 app.use(express.json());
@@ -32,16 +47,11 @@ app.use(
   })
 );
 
-
-//Aqui Habian Variables de Entornos no necesarias
-
-
 // Servir archivos estáticos del frontend
 app.use("/inicio_sesion", express.static(path.join(__dirname, "../frontend/inicio_sesion")));
 app.use(express.static(path.join(__dirname, "../frontend/ppricipal")));
+app.use(express.static(path.join(__dirname, "../frontend/usuario")));
 app.use(express.static(path.join(__dirname, "../frontend")));
-
-
 
 // Ruta raíz (home) -> devuelve la página principal
 app.get("/", (req, res) => {
@@ -51,8 +61,6 @@ app.get("/", (req, res) => {
 app.get("/inicio_sesion", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/inicio_sesion/inicio.html"));
 });
-
-
 
 // Ruta de redirección intermedia tras el logout de OpenProject
 app.get("/post_logout_principal", (req, res) => {
@@ -77,12 +85,12 @@ app.get("/post_logout_principal", (req, res) => {
     `);
 });
 
-
-
 // RUTA DE AUTENTICACIÓN
+
 app.use("/auth", authRoutes);
 
-
+// RUTA PARA PROYECTOS
+app.use("/projects", projectRoutes);
 
 // Ruta para crear usuario en OpenProject
 app.post("/create-user", async (req, res) => {
@@ -106,11 +114,10 @@ app.post("/create-user", async (req, res) => {
     };
 
     // Autenticación con API key
-    const authHeader = `Basic ${Buffer.from(`apikey:${API_KEY}`).toString("base64")}`;
-
+    const authHeader = `Basic ${Buffer.from(`apikey:${process.env.OPENPROJECT_API_KEY}`).toString("base64")}`;
 
     // Petición a OpenProject
-    const response = await axios.post(`${OPENPROJECT_URL}/api/v3/users`, userPayload, {
+    const response = await axios.post(`${process.env.OPENPROJECT_URL}/api/v3/users`, userPayload, {
       headers: {
         "Content-Type": "application/json",
         Authorization: authHeader,
@@ -141,7 +148,6 @@ app.post("/create-user", async (req, res) => {
 //app.get("/", (req, res) => {
   //res.send("Servidor backend OpenProject activo");
 //});
-
 
 // Iniciar servidor
 const PORT = process.env.PORT || 4000;

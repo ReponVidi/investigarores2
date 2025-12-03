@@ -3,6 +3,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     const userInfoElement = document.getElementById('user-info');
     const logoutBtn = document.getElementById('logoutBtn');
+
+    checkUserIsNotAdmin();
     
     // --- 1. Función para cargar y mostrar datos del usuario ---
     async function loadUserData() {
@@ -15,11 +17,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 const userData = await response.json();
                 const firstName = userData.firstName || 'Usuario';
                 const lastName = userData.lastName || 'Desconocido';
+                const email = userData.email || '';
 
-                userInfoElement.innerHTML = `<p>¡Hola, <strong>${firstName} ${lastName}</strong>!</p>`;
+                userInfoElement.innerHTML = `
+                    <p>¡Hola, <strong>${firstName} ${lastName}</strong>!</p>
+                    <small>${email}</small>
+                `;
             } else if (response.status === 401) {
                 userInfoElement.innerHTML = `<p>Error: No hay sesión activa. Redirigiendo...</p>`;
-                window.location.href = 'http://localhost:4000/';
+                setTimeout(() => {
+                    window.location.href = 'http://localhost:4000/';
+                }, 2000);
             } else {
                 userInfoElement.innerHTML = `<p>Error al cargar el perfil. Intenta nuevamente.</p>`;
             }
@@ -35,9 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault(); // Prevenir comportamiento por defecto
             
             const confirmLogout = confirm(
-                "¡Atención! Tu sesión se cerrará en OpenProject.\n\n" +
-                "Una vez en la página de OpenProject, por favor, utiliza el botón o enlace 'Regresar' si está disponible, o navega manualmente a:\n" +
-                "http://localhost:4000/ppricipal/pprincipal.html"
+                "¿Estás seguro de que quieres cerrar sesión?\n\n" +
+                "Tu sesión se cerrará tanto aquí como en OpenProject."
             );
 
             if (confirmLogout) {
@@ -93,3 +100,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // Iniciar la carga de datos al cargar la página
     loadUserData();
 });
+
+async function checkUserIsNotAdmin() {
+    try {
+        const response = await fetch('http://localhost:4000/auth/me', {
+            credentials: 'include'
+        });
+
+        if (response.ok) {
+            const userData = await response.json();
+            
+            if (userData.isAdmin) {
+                // Es administrador, redirigir al panel de admin
+                window.location.href = 'http://localhost:4000/admin/admin.html';
+                return false;
+            }
+            
+            return true;
+        }
+    } catch (error) {
+        console.error('Error verificando rol:', error);
+        return true; // Continuar en panel de usuario por defecto
+    }
+}

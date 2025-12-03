@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel de Administración - OpenProject</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="shortcut icon" href="../usuario/imagenes/lupa.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <i class="fas fa-shield-alt"></i>
+            <span>Administración</span>
+        </div>
+        
+        <div class="user-info">
+            <div class="user-avatar admin-avatar">
+                <i class="fas fa-crown"></i>
+            </div>
+            <div class="user-details">
+                <p id="user-info"></p>
+                <p class="admin-badge">
+                    <i class="fas fa-shield-alt"></i> Administrador
+                </p>
+            </div>
+        </div>
+        
+        <ul class="menu">
+            <li><a href="#" class="active" data-section="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="#" data-section="projects"><i class="fas fa-project-diagram"></i> Todos los Proyectos</a></li>
+            <li><a href="#" data-section="users"><i class="fas fa-users"></i> Usuarios</a></li>
+            <li><a href="#" data-section="reports"><i class="fas fa-chart-bar"></i> Reportes</a></li>
+            <li><a href="#" data-section="settings"><i class="fas fa-cog"></i> Configuración</a></li>
+            <li><a href="http://localhost:4000/usuario/Formulario/crear-proyecto.html"><i class="fas fa-plus-circle"></i> Crear Proyecto</a></li>
+        </ul>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="header">
+            <h1 id="section-title">Dashboard de Administración</h1>
+            
+            <div class="user-actions">
+                <i class="fas fa-bell" id="notifications"></i>
+                <div class="user-menu">
+                    <button class="user-trigger" id="userMenuTrigger">
+                        <i class="fas fa-user-cog"></i>
+                        <span id="user-name">Administrador</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <a href="#" class="dropdown-item" id="profileBtn">
+                            <i class="fas fa-user-edit"></i>
+                            <span>Mi Perfil</span>
+                        </a>
+                        <a href="#" class="dropdown-item" id="switchToUserPanel">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span>Vista Usuario</span>
+                        </a>
+                        <a href="#" class="dropdown-item logout" id="logoutBtn">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Cerrar Sesión</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Dashboard Content -->
+        <div id="dashboard-section" class="content-section active">
+            <div class="stats-container">
+                <div class="stat-card">
+                    <h3>Proyectos Totales</h3>
+                    <div class="value" id="total-projects">0</div>
+                    <div class="trend">
+                        <i class="fas fa-chart-line"></i> <span>Cargando...</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <h3>Usuarios Activos</h3>
+                    <div class="value" id="active-users">0</div>
+                    <div class="trend">
+                        <i class="fas fa-users"></i> <span>Cargando...</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <h3>Proyectos Activos</h3>
+                    <div class="value" id="active-projects">0</div>
+                    <div class="trend">
+                        <i class="fas fa-tasks"></i> <span>Cargando...</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <h3>Esta Semana</h3>
+                    <div class="value" id="week-activity">0</div>
+                    <div class="trend">
+                        <i class="fas fa-calendar-week"></i> <span>Cargando...</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Proyectos Recientes</h2>
+                        <div class="options">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="recent-projects">
+                            <p>Cargando proyectos...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Actividad Reciente</h2>
+                        <div class="options">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="recent-activity">
+                            <p>Cargando actividad...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Projects Content -->
+        <div id="projects-section" class="content-section">
+            <div class="section-header">
+                <h2>Todos los Proyectos</h2>
+                <div class="section-actions">
+                    <button class="btn btn-primary" id="refreshProjects">
+                        <i class="fas fa-sync-alt"></i> Actualizar
+                    </button>
+                    <button class="btn btn-success" onclick="window.location.href='../usuario/Formulario/crear-proyecto.html'">
+                        <i class="fas fa-plus"></i> Nuevo Proyecto
+                    </button>
+                </div>
+            </div>
+            <div class="table-container">
+                <table id="projects-table">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Identificador</th>
+                            <th>Estado</th>
+                            <th>Creado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="projects-table-body">
+                        <tr><td colspan="5">Cargando proyectos...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Users Content -->
+        <div id="users-section" class="content-section">
+            <div class="section-header">
+                <h2>Usuarios del Sistema</h2>
+                <div class="section-actions">
+                    <button class="btn btn-primary" id="refreshUsers">
+                        <i class="fas fa-sync-alt"></i> Actualizar
+                    </button>
+                </div>
+            </div>
+            <div class="table-container">
+                <table id="users-table">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Login</th>
+                            <th>Estado</th>
+                            <th>Último Acceso</th>
+                        </tr>
+                    </thead>
+                    <tbody id="users-table-body">
+                        <tr><td colspan="5">Cargando usuarios...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Reports Content -->
+        <div id="reports-section" class="content-section">
+            <div class="section-header">
+                <h2>Reportes y Estadísticas</h2>
+            </div>
+            <div class="reports-container">
+                <div class="report-card">
+                    <h3>Proyectos por Estado</h3>
+                    <div class="chart-container">
+                        <canvas id="projectsByStatusChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="report-card">
+                    <h3>Actividad por Mes</h3>
+                    <div class="chart-container">
+                        <canvas id="activityByMonthChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Settings Content -->
+        <div id="settings-section" class="content-section">
+            <div class="section-header">
+                <h2>Configuración del Sistema</h2>
+            </div>
+            <div class="settings-container">
+                <div class="setting-group">
+                    <h3><i class="fas fa-cogs"></i> Configuración General</h3>
+                    <div class="setting-item">
+                        <label for="system-name">Nombre del Sistema</label>
+                        <input type="text" id="system-name" value="VIDI - UNEFA" disabled>
+                    </div>
+                    <div class="setting-item">
+                        <label for="openproject-url">URL de OpenProject</label>
+                        <input type="text" id="openproject-url" value="http://openproject.vidiprueba.com" disabled>
+                    </div>
+                </div>
+                
+                <div class="setting-group">
+                    <h3><i class="fas fa-user-shield"></i> Administradores</h3>
+                    <div class="setting-item">
+                        <label>Administradores Actuales</label>
+                        <div id="admin-list">
+                            <p>Cargando lista de administradores...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
