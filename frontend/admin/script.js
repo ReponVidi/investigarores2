@@ -1,6 +1,8 @@
 // frontend/admin/script.js
 
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM cargado - Panel de Administración');
+    
     // Verificar si el usuario es administrador
     checkAdminAccess();
     
@@ -21,7 +23,38 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Configurar botón para cambiar a vista usuario
     setupSwitchToUserPanel();
+    
+    // SOLUCIÓN: Configurar botones de "Crear Proyecto"
+    setupCreateProjectButtons();
 });
+
+// SOLUCIÓN: Configurar todos los botones de "Crear Proyecto"
+function setupCreateProjectButtons() {
+    console.log('Configurando botones de creación de proyectos...');
+    
+    // Botón en el sidebar
+    const sidebarLink = document.getElementById('crear-proyecto-link');
+    if (sidebarLink) {
+        console.log('Configurando botón del sidebar:', sidebarLink.href);
+        sidebarLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            const adminPath = './Formulario/crear-proyecto.html';
+            console.log('Navegando a:', adminPath);
+            window.location.href = adminPath;
+        });
+    }
+    
+    // Botón en la sección de proyectos
+    const nuevoProyectoBtn = document.getElementById('nuevo-proyecto-btn');
+    if (nuevoProyectoBtn) {
+        console.log('Configurando botón "Nuevo Proyecto"');
+        nuevoProyectoBtn.addEventListener('click', function() {
+            const adminPath = './Formulario/crear-proyecto.html';
+            console.log('Navegando a:', adminPath);
+            window.location.href = adminPath;
+        });
+    }
+}
 
 // Verificar que el usuario sea administrador
 async function checkAdminAccess() {
@@ -40,6 +73,7 @@ async function checkAdminAccess() {
                 return false;
             }
             
+            console.log('Usuario verificado como administrador:', userData.email);
             return true;
         } else if (response.status === 401) {
             // No autenticado, redirigir al login
@@ -101,7 +135,7 @@ function setupNavigation() {
         'dashboard': 'Dashboard de Administración',
         'projects': 'Gestión de Proyectos',
         'users': 'Gestión de Usuarios',
-        'reports': 'Reportes y Estadísticas',
+        'reports': 'Fichas Técnicas',
         'settings': 'Configuración del Sistema'
     };
     
@@ -221,10 +255,6 @@ async function loadDashboardData() {
         
         if (userResponse.ok) {
             const userData = await userResponse.json();
-            const accessToken = userData.access_token; // Necesitaríamos guardar esto en la sesión
-            
-            // En una implementación real, aquí llamarías a las APIs de OpenProject
-            // Por ahora, usaremos datos de ejemplo
             
             // Datos de ejemplo para el dashboard
             const dashboardData = {
@@ -298,9 +328,6 @@ async function loadProjectsData() {
                 </tr>
             `;
             
-            // En una implementación real, aquí llamarías a la API de OpenProject
-            // GET /api/v3/projects con el token de administrador
-            
             // Datos de ejemplo
             setTimeout(() => {
                 const exampleProjects = [
@@ -325,7 +352,8 @@ async function loadProjectsData() {
                             <button class="btn-action" title="Ver detalles">
                                 <i class="fas fa-eye"></i>
                             </button>
-                            <button class="btn-action" title="Editar" onclick="window.location.href='../usuario/Formulario/crear-proyecto.html'">
+                            <!-- SOLUCIÓN: Ruta corregida -->
+                            <button class="btn-action" title="Editar" onclick="window.location.href='./Formulario/crear-proyecto.html?id=${project.id}'">
                                 <i class="fas fa-edit"></i>
                             </button>
                         </td>

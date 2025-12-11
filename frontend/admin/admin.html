@@ -34,14 +34,15 @@
             <!--<li><a href="#" data-section="users"><i class="fas fa-users"></i> Usuarios</a></li>-->
             <li><a href="#" data-section="reports"><i class="fas fa-chart-bar"></i> Fichas Tecnicas</a></li>
             <li><a href="#" data-section="settings"><i class="fas fa-cog"></i> Configuración</a></li>
-            <li><a href="http://localhost:4000/usuario/Formulario/crear-proyecto.html"><i class="fas fa-plus-circle"></i> Crear Proyecto</a></li>
+            <!-- CAMBIO AQUÍ: Ruta corregida -->
+            <li><a href="./Formulario/crear-proyecto.html" id="crear-proyecto-link"><i class="fas fa-plus-circle"></i> Crear Proyecto</a></li>
         </ul>
     </div>
     
     <!-- Main Content -->
     <div class="main-content">
         <div class="header">
-            <h1 id=""></h1>
+            <h1 id="section-title"></h1>
             
             <div class="user-actions">
                 <i class="fas fa-bell" id="notifications"></i>
@@ -69,7 +70,10 @@
             </div>
         </div>
         
-      
+        <!-- Dashboard Content -->
+        <div id="dashboard-section" class="content-section active">
+           
+        </div>
         
         <!-- Projects Content -->
         <div id="projects-section" class="content-section">
@@ -79,7 +83,8 @@
                     <button class="btn btn-primary" id="refreshProjects">
                         <i class="fas fa-sync-alt"></i> Actualizar
                     </button>
-                    <button class="btn btn-success" onclick="window.location.href='../usuario/Formulario/crear-proyecto.html'">
+                    <!-- CAMBIO AQUÍ: Ruta corregida -->
+                    <button class="btn btn-success" id="nuevo-proyecto-btn">
                         <i class="fas fa-plus"></i> Nuevo Proyecto
                     </button>
                 </div>
