@@ -19,19 +19,19 @@ document.addEventListener("DOMContentLoaded", () => {
     if (botonRegistro) {
         botonRegistro.addEventListener("click", () => {
             // Redirige a la página de inicio de sesión
-            window.location.href = "http://localhost:4000/inicio_sesion";
+            window.location.href = "http://localhost:4000/registro";
         });
     }
 
     // 2. Manejar el clic del botón de Login (Redirección a OpenProject)
     const loginBtn = document.getElementById("loginBtn");
     if (loginBtn) {
-         loginBtn.addEventListener("click", () => {
-             // Redirección al inicio de sesión de OpenProject
-             window.location.href = "http://localhost:4000/auth/openproject";
-         });
+        loginBtn.addEventListener("click", () => {
+            // Redirección al inicio de sesión de OpenProject
+            window.location.href = "http://localhost:4000/login";
+        });
     }
-    
+
     // 3. Mostrar bienvenida del usuario si está autenticado
     showRealUserWelcome();
 });
@@ -58,14 +58,14 @@ async function getUserData() {
 // Mostrar bienvenida con datos reales
 async function showRealUserWelcome() {
     const userData = await getUserData();
-    
+
     // Si hay usuario autenticado, cambiar texto del botón login
     const loginBtn = document.getElementById("loginBtn");
     if (loginBtn && userData) {
         const firstName = userData.firstName || 'Usuario';
         loginBtn.textContent = `Bienvenido, ${firstName}`;
         loginBtn.style.backgroundColor = '#4CAF50'; // Verde para indicar sesión activa
-        loginBtn.onclick = function() {
+        loginBtn.onclick = function () {
             window.location.href = "http://localhost:4000/usuario/usuario.html";
         };
     }

@@ -1,251 +1,50 @@
-document.addEventListener('DOMContentLoaded', () => {
-  // Elementos principales
-  const form = document.getElementById('userForm');
-  const messageDiv = document.getElementById('message');
-  const submitBtn = document.getElementById('submitBtn');
-  const passwordInput = document.getElementById('password');
-  const confirmInput = document.getElementById('confirmPassword');
-  const termsCheckbox = document.getElementById('terms');
-  
-  // Estado del formulario
-  let state = { 
-    passwordValid: false, 
-    passwordsMatch: false, 
-    formValid: false 
-  };
+// Inicializar iconos de Lucide
+lucide.createIcons();
 
-  // Inicialización
-  init();
+document.addEventListener("DOMContentLoaded", () => {
+    // 1. Referencia al formulario (Asegúrate que el ID en tu HTML sea 'loginForm')
+    const loginForm = document.getElementById('loginForm');
 
-  // FUNCIONES PRINCIPALES
-  function init() {
-    setupEventListeners();
-    setupNavigation();
-    updateSubmitButton();
-  }
+    if (loginForm) {
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
 
-  function setupEventListeners() {
-    // Validación en tiempo real
-    form.addEventListener('input', () => validateForm());
-    
-    // Contraseñas
-    passwordInput.addEventListener('input', validatePassword);
-    confirmInput.addEventListener('input', validatePasswordMatch);
-    
-    // Visibilidad de contraseñas
-    document.querySelectorAll('.toggle-password').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const input = e.target.closest('.password-wrapper').querySelector('input');
-        input.type = input.type === 'password' ? 'text' : 'password';
-        e.target.classList.toggle('fa-eye');
-        e.target.classList.toggle('fa-eye-slash');
-      });
-    });
-    
-    // Envío del formulario
-    form.addEventListener('submit', handleSubmit);
-  }
+            // Extraer datos de los inputs
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
 
-  function setupNavigation() {
-    // Botones de navegación
-    const actions = {
-      loginOpenProject: () => window.location.href = "http://localhost:4000/auth/openproject",
-      backToHome: () => window.location.href = "http://localhost:4000/",
-      goToLogin: () => window.location.href = "http://localhost:4000/auth/openproject",
-      closeSuccess: () => {
-        document.getElementById('mensajeExito').style.display = 'none';
-        document.getElementById('overlay').style.display = 'none';
-        form.reset();
-        state = { passwordValid: false, passwordsMatch: false, formValid: false };
-        updateSubmitButton();
-      }
-    };
+            const formData = { username, password };
 
-    Object.keys(actions).forEach(id => {
-      const element = document.getElementById(id);
-      if (element) element.addEventListener('click', actions[id]);
-    });
-  }
+            try {
+                // Petición al servidor
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
 
-  // VALIDACIONES
-  function validateForm() {
-    const inputs = Array.from(form.querySelectorAll('input[required]'));
-    const allFilled = inputs.every(input => input.value.trim());
-    const termsAccepted = termsCheckbox.checked;
-    const emailValid = validateEmail(document.getElementById('email').value);
-    
-    state.formValid = allFilled && termsAccepted && state.passwordValid && state.passwordsMatch && emailValid;
-    updateSubmitButton();
-    return state.formValid;
-  }
+                const data = await response.json();
 
-  function validateEmail(email) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  }
-
-  function validatePassword() {
-    const password = passwordInput.value;
-    let strength = 0;
-    
-    if (password.length >= 10) strength += 25;
-    if (/[A-Z]/.test(password)) strength += 25;
-    if (/[0-9]/.test(password)) strength += 25;
-    if (/[^A-Za-z0-9]/.test(password)) strength += 25;
-    
-    // Actualizar UI
-    const strengthBar = document.querySelector('.strength-bar');
-    const strengthText = document.getElementById('strengthText');
-    
-    if (password) {
-      document.getElementById('passwordStrength').classList.add('visible');
-      strengthBar.style.width = strength + '%';
-      strengthBar.style.backgroundColor = strength >= 75 ? '#1c8328' : strength >= 50 ? '#f39c12' : '#ff6b6b';
-      strengthText.textContent = strength >= 75 ? 'Fuerte' : strength >= 50 ? 'Media' : 'Débil';
-      state.passwordValid = strength >= 50;
-    } else {
-      document.getElementById('passwordStrength').classList.remove('visible');
-      state.passwordValid = false;
+                if (data.success) {
+                    // El servidor decide si vas a /admin o /usuario
+                    console.log("Acceso concedido. Redirigiendo a:", data.redirect);
+                    window.location.href = data.redirect;
+                } else {
+                    // Mostrar error del servidor (usuario no encontrado, clave mal, etc.)
+                    alert(data.error || "Credenciales incorrectas");
+                }
+            } catch (error) {
+                console.error("Error en la conexión al backend:", error);
+                alert("No se pudo conectar con el servidor.");
+            }
+        });
     }
-    
-    validatePasswordMatch();
-  }
 
-  function validatePasswordMatch() {
-    const match = passwordInput.value === confirmInput.value && passwordInput.value;
-    const matchElement = document.getElementById('passwordMatch');
-    
-    if (confirmInput.value) {
-      matchElement.classList.add('visible');
-      matchElement.classList.toggle('match', match);
-      matchElement.innerHTML = match ? 
-        '<i class="fas fa-check"></i> <span>Las contraseñas coinciden</span>' : 
-        '<i class="fas fa-times"></i> <span>Las contraseñas no coinciden</span>';
-      state.passwordsMatch = match;
-    } else {
-      matchElement.classList.remove('visible');
-      state.passwordsMatch = false;
+    // 2. Manejo del botón de Registro (si existe en esa página)
+    const botonRegistro = document.querySelector(".registrate");
+    if (botonRegistro) {
+        botonRegistro.addEventListener("click", () => {
+            window.location.href = "/registro";
+        });
     }
-  }
-
-  function updateSubmitButton() {
-    if (state.formValid) {
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = '<i class="fas fa-user-plus"></i> Crear Cuenta';
-      submitBtn.classList.add('pulse');
-    } else {
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = '<i class="fas fa-lock"></i> Completa el formulario';
-      submitBtn.classList.remove('pulse');
-    }
-  }
-
-  // MANEJO DEL ENVÍO
-  async function handleSubmit(e) {
-    e.preventDefault();
-    
-    if (!validateForm()) {
-      showMessage('Por favor, completa correctamente todos los campos.', 'error');
-      return;
-    }
-    
-    // Preparar datos
-    const formData = new FormData(form);
-    const userData = Object.fromEntries(formData.entries());
-    userData.confirmPassword = confirmInput.value;
-    
-    // Mostrar progreso
-    showProgress();
-    showMessage('Creando usuario...', 'info');
-    
-    try {
-      const response = await fetch("http://localhost:4000/create-user", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userData)
-      });
-
-      const data = await response.json();
-      
-      if (response.ok && data.success) {
-        showMessage('✅ ¡Usuario creado exitosamente!', 'success');
-        showSuccessModal(data, userData);
-        startCountdown();
-      } else {
-        throw new Error(data.error || "Error desconocido");
-      }
-      
-    } catch (error) {
-      showMessage(`❌ ${error.message}`, 'error');
-      hideProgress();
-    }
-  }
-
-  // FUNCIONES DE UI
-  function showMessage(text, type) {
-    messageDiv.textContent = text;
-    messageDiv.className = `message ${type} visible`;
-    messageDiv.style.display = 'block';
-    
-    if (type !== 'error') {
-      setTimeout(() => {
-        messageDiv.style.display = 'none';
-      }, 5000);
-    }
-  }
-
-  function showProgress() {
-    const progress = document.getElementById('progressContainer');
-    const bar = document.getElementById('progressBar');
-    progress.classList.add('visible');
-    
-    let width = 0;
-    const interval = setInterval(() => {
-      if (width >= 100) {
-        clearInterval(interval);
-        setTimeout(() => progress.classList.remove('visible'), 1000);
-      } else {
-        width += 10;
-        bar.style.width = width + '%';
-      }
-    }, 200);
-  }
-
-  function hideProgress() {
-    document.getElementById('progressContainer').classList.remove('visible');
-  }
-
-  function showSuccessModal(apiResponse, userData) {
-    const modal = document.getElementById('mensajeExito');
-    const overlay = document.getElementById('overlay');
-    
-    // Actualizar contenido
-    document.getElementById('successTitle').textContent = '🎉 ¡Registro Exitoso!';
-    document.getElementById('successMessage').textContent = apiResponse.message;
-    
-    document.getElementById('userDetails').innerHTML = `
-      <h4>Detalles de tu cuenta:</h4>
-      <p><strong>Nombre:</strong> ${userData.firstName} ${userData.lastName}</p>
-      <p><strong>Email:</strong> ${userData.email}</p>
-      <p><strong>Usuario:</strong> ${userData.login}</p>
-    `;
-    
-    // Mostrar
-    modal.style.display = 'block';
-    overlay.style.display = 'block';
-  }
-
-  function startCountdown() {
-    let seconds = 5;
-    const countdownElement = document.getElementById('countdown');
-    
-    const interval = setInterval(() => {
-      seconds--;
-      countdownElement.textContent = seconds;
-      
-      if (seconds <= 0) {
-        clearInterval(interval);
-        window.location.href = "http://localhost:4000/auth/openproject";
-      }
-    }, 1000);
-  }
 });

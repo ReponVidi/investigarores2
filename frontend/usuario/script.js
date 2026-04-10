@@ -1,125 +1,59 @@
 // frontend/usuario/script.js
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const userInfoElement = document.getElementById('user-info');
     const logoutBtn = document.getElementById('logoutBtn');
+    const userMenuTrigger = document.getElementById('userMenuTrigger');
+    const userDropdown = document.getElementById('userDropdown');
 
-    checkUserIsNotAdmin();
-    
-    // --- 1. Función para cargar y mostrar datos del usuario ---
+    // --- 1. Cargar datos del usuario desde el servidor ---
     async function loadUserData() {
         try {
-            const response = await fetch('http://localhost:4000/auth/me', {
-                credentials: 'include'
-            });
+            // Usamos el endpoint que SI existe en tu server.js
+            const response = await fetch('/api/user-profile');
+            const data = await response.json();
 
-            if (response.ok) {
-                const userData = await response.json();
-                const firstName = userData.firstName || 'Usuario';
-                const lastName = userData.lastName || 'Desconocido';
-                const email = userData.email || '';
-
-                userInfoElement.innerHTML = `
-                    <p>¡Hola, <strong>${firstName} ${lastName}</strong>!</p>
-                    <small>${email}</small>
-                `;
-            } else if (response.status === 401) {
-                userInfoElement.innerHTML = `<p>Error: No hay sesión activa. Redirigiendo...</p>`;
-                setTimeout(() => {
-                    window.location.href = 'http://localhost:4000/';
-                }, 2000);
+            if (data.success) {
+                // Actualizamos el nombre en el sidebar
+                if (userInfoElement) {
+                    userInfoElement.innerHTML = `<span>Hola, <strong>${data.username}</strong></span>`;
+                }
+                console.log("Perfil cargado para:", data.username);
             } else {
-                userInfoElement.innerHTML = `<p>Error al cargar el perfil. Intenta nuevamente.</p>`;
+                console.warn("Sesión no válida, redirigiendo...");
+                window.location.href = '/login';
             }
         } catch (error) {
-            console.error('Fallo en la conexión al backend:', error);
-            userInfoElement.innerHTML = `<p>No se pudo conectar con el servidor.</p>`;
+            console.error("Error al obtener perfil:", error);
+            if (userInfoElement) userInfoElement.textContent = "Error de conexión";
         }
     }
 
-    // --- 2. Función unificada para manejar el cierre de sesión ---
+    // --- 2. Manejo del Cierre de Sesión ---
     if (logoutBtn) {
         logoutBtn.addEventListener('click', (e) => {
-            e.preventDefault(); // Prevenir comportamiento por defecto
-            
-            const confirmLogout = confirm(
-                "¿Estás seguro de que quieres cerrar sesión?\n\n" +
-                "Tu sesión se cerrará tanto aquí como en OpenProject."
-            );
-
-            if (confirmLogout) {
-                window.location.href = 'http://localhost:4000/auth/logout';
+            e.preventDefault();
+            if (confirm("¿Estás seguro de que quieres cerrar sesión?")) {
+                // Como no tienes ruta de logout aún, redirigimos al principal
+                window.location.href = '/'; 
             }
         });
     }
 
-    // --- 3. Script para el menú desplegable (MANTENER) ---
-    const userMenuTrigger = document.getElementById('userMenuTrigger');
-    const userDropdown = document.getElementById('userDropdown');
-    
+    // --- 3. Menú Desplegable ---
     if (userMenuTrigger && userDropdown) {
-        userMenuTrigger.addEventListener('click', function(e) {
+        userMenuTrigger.addEventListener('click', (e) => {
             e.stopPropagation();
             userDropdown.classList.toggle('active');
         });
-        
-        document.addEventListener('click', function(e) {
-            if (!userMenuTrigger.contains(e.target) && !userDropdown.contains(e.target)) {
-                userDropdown.classList.remove('active');
-            }
-        });
-        
-        // Cerrar menú con Escape
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
+
+        document.addEventListener('click', (e) => {
+            if (!userMenuTrigger.contains(e.target)) {
                 userDropdown.classList.remove('active');
             }
         });
     }
 
-    // --- 4. Animaciones y menu items (MANTENER) ---
-    const bars = document.querySelectorAll('.bar');
-    bars.forEach(bar => {
-        const originalHeight = bar.style.height;
-        bar.style.height = '0%';
-        
-        setTimeout(() => {
-            bar.style.height = originalHeight;
-        }, 300);
-    });
-    
-    const menuItems = document.querySelectorAll('.menu a');
-    menuItems.forEach(item => {
-        item.addEventListener('click', function(e) {
-            e.preventDefault();
-            menuItems.forEach(i => i.classList.remove('active'));
-            this.classList.add('active');
-        });
-    });
-
-    // Iniciar la carga de datos al cargar la página
+    // Ejecutar carga inicial
     loadUserData();
 });
-
-async function checkUserIsNotAdmin() {
-    try {
-        const response = await fetch('http://localhost:4000/auth/me', {
-            credentials: 'include'
-        });
-
-        if (response.ok) {
-            const userData = await response.json();
-            
-            if (userData.isAdmin) {
-                // Es administrador, redirigir al panel de admin
-                window.location.href = 'http://localhost:4000/admin/admin.html';
-                return false;
-            }
-            
-            return true;
-        }
-    } catch (error) {
-        console.error('Error verificando rol:', error);
-        return true; // Continuar en panel de usuario por defecto
-    }
-}

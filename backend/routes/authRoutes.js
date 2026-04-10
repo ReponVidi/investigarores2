@@ -1,7 +1,6 @@
 import express from "express";
 import {
-  redirectToOpenProject,
-  handleOpenProjectCallback,
+  loginLocal,
   getUserSession,
   logoutUser,
 } from "../controllers/authController.js";
@@ -16,8 +15,7 @@ const requireAuth = (req, res, next) => {
   next();
 };
 
-router.get("/openproject", redirectToOpenProject);
-router.get("/openproject/callback", handleOpenProjectCallback);
+router.post("/login", loginLocal);
 router.get("/me", requireAuth, getUserSession);
 router.get("/logout", logoutUser);
 
