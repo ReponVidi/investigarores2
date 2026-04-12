@@ -140,3 +140,39 @@ app.post("/create-user", createUserLimiter, async (req, res) => {
 app.use((req, res) => res.status(404).json({ success: false, error: "Ruta no encontrada" }));
 
 app.listen(4000, () => console.log(`🚀 Servidor en puerto 4000`));
+
+//Añadir estas rutas para el esquema CORE
+
+// Endpoint para obtener los logs de una tabla específica del esquema core
+app.get('/api/core/audit/:instruccion', async (req, res) => {
+    const { instruccion } = req.params;
+
+    // Lista blanca de tablas permitidas por seguridad (evitar SQL Injection)
+    const tablasCore = [
+        'registrar_proyecto', 
+        'actualizar_proyecto', 
+        'eliminar_proyecto', 
+        'registrar_usuario', 
+        'eliminar_usuario',
+        'guardar_proyecto'
+    ];
+
+    if (!tablasCore.includes(instruccion)) {
+        return res.status(400).json({ success: false, error: "Instrucción no válida o tabla no encontrada." });
+    }
+
+    try {
+        // Consultamos al esquema 'core' específicamente
+        // Nota: Asegúrate de que las columnas coincidan con las de tu SQL (id, fecha_hora, usuario, detalles)
+        const query = `SELECT * FROM core.${instruccion} ORDER BY fecha_hora DESC LIMIT 100`;
+        const result = await pool.query(query);
+
+        res.json({
+            success: true,
+            data: result.rows
+        });
+    } catch (error) {
+        console.error(`Error al consultar core.${instruccion}:`, error.message);
+        res.status(500).json({ success: false, error: "Error en el servidor al extraer datos de auditoría." });
+    }
+});

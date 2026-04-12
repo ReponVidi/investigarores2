@@ -532,3 +532,4 @@ async function loadSettingsData() {
         `;
     }
 }
+
