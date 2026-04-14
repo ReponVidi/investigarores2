@@ -455,3 +455,204 @@ footer {
         margin: 10px 0px 10px 40px;
     }
 }
+
+/* Estilos para la sección de información que se veía blanca */
+.seccion-novedades {
+    background: rgba(255, 255, 255, 0.9);
+    /* Fondo semi-transparente */
+    margin: 20px;
+    padding: 30px;
+    border-radius: 12px;
+}
+
+.main-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    /* Divide en 2 columnas: Info y Noticias */
+    gap: 25px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border-left: 5px solid #177826;
+    /* Borde verde para combinar */
+    margin-bottom: 15px;
+}
+
+.unefa-branding {
+    text-align: center;
+    padding: 20px;
+    background: #f0f7f1;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.logo-mini {
+    width: 80px;
+    height: auto;
+}
+
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.news-item {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.news-item h4 {
+    color: #177826;
+}
+
+.date {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+/* Contenedor Grid: Aquí ocurre la magia de la distribución */
+.info-grid-container {
+    display: grid;
+    /* Crea 4 columnas iguales si hay espacio, si no, se ajusta solo */
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+    width: 100%;
+}
+
+/* Estilo de cada Tarjeta Individual */
+.info-card {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-top: 4px solid #177826;
+    /* Detalle de color institucional */
+    padding: 20px;
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.info-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Iconos para romper la monotonía del texto */
+.icon-wrapper {
+    font-size: 24px;
+    color: #177826;
+    margin-bottom: 15px;
+    background: #f0f7f1;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.info-card h4 {
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.info-card p {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.4;
+    margin: 0;
+}
+
+/* El contenedor que pone los elementos en paralelo */
+.novedades-container {
+    display: flex;
+    justify-content: space-between;
+    /* Separa los cuadros */
+    gap: 20px;
+    /* Espacio entre ellos */
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Estilo para los recuadros individuales */
+.cuadro-informativo {
+    flex: 1;
+    /* Esto obliga a que ambos midan lo mismo */
+    background: #ffffff;
+    border-radius: 8px;
+    border-left: 6px solid #177826;
+    /* Tu color institucional */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+}
+
+.header-cuadro {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    color: #177826;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.header-cuadro h3 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.lista-detalles {
+    list-style: none;
+    padding: 0;
+}
+
+.lista-detalles li {
+    margin-bottom: 12px;
+    font-size: 0.95rem;
+    color: #444;
+}
+
+/* Estilo de las noticias */
+.noticia-breve h4 {
+    margin: 10px 0 5px 0;
+    color: #333;
+}
+
+.noticia-breve p {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.fecha {
+    font-size: 0.8rem;
+    color: #999;
+}
+
+/* Responsivo: Si la pantalla es pequeña, se ponen uno abajo del otro */
+@media (max-width: 850px) {
+    .novedades-container {
+        flex-direction: column;
+    }
+}
+
+/* Responsive para esta sección */
+@media (max-width: 900px) {
+    .main-grid {
+        grid-template-columns: 1fr;
+        /* Una sola columna en móviles */
+    }
+}

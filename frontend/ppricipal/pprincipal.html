@@ -2,202 +2,183 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIDI</title>
-    <link rel="stylesheet" href="
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VIDI</title>
+  <link rel="stylesheet" href="
     /ppricipal/styles.css">
-    <link rel="stylesheet" href="/ppricipal/responsive.css">
-    <link rel="shortcut icon" href="/ppricipal/imagenes/lupa.png" type="image/x-icon">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/ppricipal/responsive.css">
+  <link rel="shortcut icon" href="/ppricipal/imagenes/lupa.png" type="image/x-icon">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
-    <!-- Cabecera -->
-    <header>
-        <div class="logo-container">
-            <img src="/ppricipal/imagenes/unefalogo.png" alt="Logo UNEFA" class="logo">
+  <!-- Cabecera -->
+  <header>
+    <div class="logo-container">
+      <img src="/ppricipal/imagenes/unefalogo.png" alt="Logo UNEFA" class="logo">
+    </div>
+    <div class="header-text">
+      <h1>V I D I</h1>
+      <p>VAMOS POR UN FUTURO MAS OPTIMO</p>
+    </div>
+  </header>
+
+
+  <!-- Navegación -->
+  <nav>
+    <ul>
+      <li class="inicio"><a href="#inicio">Inicio</a></li>
+      <li class="nosotros"><a href="#nosotros">Nosotros</a></li>
+      <li class="servicios"><a href="#servicios">Servicios</a></li>
+      <li class="contacto"><a href="#contacto">Contacto</a></li>
+      <li class="inicio-sesion"><a href=# id="loginBtn">Inicio de sesión</a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Contenido principal -->
+
+  <main class="container">
+    <div class="fondo">
+      <!-- Carrusel de imágenes -->
+      <div class="fondo-imagenes">
+        <div class="slide active">
+          <img src="/ppricipal/imagenes/fondo22.jpg" alt="">
         </div>
-        <div class="header-text">
-            <h1>V I D I</h1>
-            <p>VAMOS POR UN FUTURO MAS OPTIMO</p>
+        <div class="slide">
+          <img src="/ppricipal/imagenes/fondo3.jpg" alt="">
         </div>
-    </header>
-
-
-    <!-- Navegación -->
-    <nav>
-        <ul>
-            <li class="inicio"><a href="#inicio">Inicio</a></li>
-            <li class="nosotros"><a href="#nosotros">Nosotros</a></li>
-            <li class="servicios"><a href="#servicios">Servicios</a></li>
-            <li class="contacto"><a href="#contacto">Contacto</a></li>
-            <li class="inicio-sesion"><a href=# id="loginBtn">Inicio de sesión</a>
-            </li>
-        </ul>
-    </nav>
-
-    <!-- Contenido principal -->
-
-    <main class="container">
-        <div class="fondo">
-            <!-- Carrusel de imágenes -->
-            <div class="fondo-imagenes">
-                <div class="slide active">
-                    <img src="/ppricipal/imagenes/fondo22.jpg" alt="">
-                </div>
-                <div class="slide">
-                    <img src="/ppricipal/imagenes/fondo3.jpg" alt="">
-                </div>
-                <div class="slide">
-                    <img src="/ppricipal/imagenes/fondo4.jpg" alt="">
-                </div>
-            </div>
-
-            <!-- Polígono (separado del carrusel) -->
-            <div class="poligono-container">
-                <div class="poligono">
-                    <div class="imge">
-                        <img src="/ppricipal/imagenes/biblioteca.jpg" alt="">
-                    </div>
-                </div>
-            </div>
-
-            <!-- Texto y botón (separados) -->
-            <div class="fondo-texto">
-                <h2>REGISTRATE CON NOSOTROS Y AYUDANOS A CONSEGUIR MAS IDEAS INNOVADORAS PARA AYUDAR A PROGRESAR EL PAIS
-                    Y SU EVOLUCION</h2>
-                <button class="registrate">
-                    Registrate
-                </button>
-            </div>
+        <div class="slide">
+          <img src="/ppricipal/imagenes/fondo4.jpg" alt="">
         </div>
-
-  <div class="main-container">
-    
-    <!-- PANEL IZQUIERDO: Información UNEFA -->
-    <div class="left-panel">
-      <div class="unefa-logo">
-        <img src="imagenes/unefalogo.png" alt="UNEFA" class="logo-img">
-        <h2>UNEFA</h2>
-        <p class="unefa-motto">"Honor, Lealtad, Patriotismo"</p>
       </div>
+
+      <!-- Polígono (separado del carrusel) -->
+      <div class="poligono-container">
+        <div class="poligono">
+          <div class="imge">
+            <img src="/ppricipal/imagenes/biblioteca.jpg" alt="">
+          </div>
+        </div>
+      </div>
+
+      <!-- Texto y botón (separados) -->
+      <div class="fondo-texto">
+        <h2>REGISTRATE CON NOSOTROS Y AYUDANOS A CONSEGUIR MAS IDEAS INNOVADORAS PARA AYUDAR A PROGRESAR EL PAIS
+          Y SU EVOLUCION</h2>
+        <button class="registrate">
+          Registrate
+        </button>
+      </div>
+    </div>
+
+    <div class="main-container">
+
+
 
       <!-- Información Importante -->
       <div class="card info-section">
         <h3><i class="fas fa-info-circle"></i> Información Importante</h3>
-        <div class="info-grid">
-          <div class="info-item">
-            <i class="fas fa-graduation-cap"></i>
+
+        <div class="info-grid-container">
+          <div class="info-card">
+            <div class="icon-wrapper"><i class="fas fa-key"></i></div>
             <h4>Requisitos</h4>
             <p>Contraseña mínima de 10 caracteres, datos personales completos.</p>
           </div>
-          <div class="info-item">
-            <i class="fas fa-clock"></i>
+
+          <div class="info-card">
+            <div class="icon-wrapper"><i class="fas fa-clock"></i></div>
             <h4>Horarios</h4>
-            <p>L-V: 8:00 AM - 5:00 PM<br>Sábados: 8:00 AM - 12:00 PM</p>
+            <p><strong>L-V:</strong> 8:00 AM - 5:00 PM</p>
+            <p><strong>Sábados:</strong> 8:00 AM - 12:00 PM</p>
           </div>
-          <div class="info-item">
-            <i class="fas fa-file-alt"></i>
+
+          <div class="info-card">
+            <div class="icon-wrapper"><i class="fas fa-file-invoice"></i></div>
             <h4>Documentación</h4>
-            <p>Cédula de identidad y comprobante de estudios.</p>
+            <p>Cédula de identidad y comprobante de estudios originales.</p>
           </div>
-          <div class="info-item">
-            <i class="fas fa-university"></i>
-            <h4>Sedis</h4>
+
+          <div class="info-card">
+            <div class="icon-wrapper"><i class="fas fa-map-marker-alt"></i></div>
+            <h4>Sedes</h4>
             <p>Caracas, Maracay, Puerto Cabello, Barquisimeto, Coro.</p>
           </div>
         </div>
       </div>
 
       <!-- Noticias UNEFA -->
-      <div class="card news-section">
-        <h3><i class="fas fa-newspaper"></i> Noticias UNEFA</h3>
-        <div class="news-grid">
-          <div class="news-item">
-            <span class="news-date">20 Ene 2024</span>
-            <h4>Convocatoria Investigación 2024</h4>
-            <p>Convocatoria abierta para proyectos de investigación.</p>
-            <a href="#" class="news-link">Leer más →</a>
+
+      <section class="novedades-container">
+
+        <div class="cuadro-informativo">
+          <div class="header-cuadro">
+            <i class="fas fa-info-circle"></i>
+            <h3>Información Importante</h3>
           </div>
-          <div class="news-item">
-            <span class="news-date">18 Ene 2024</span>
-            <h4>Jornadas Académicas</h4>
-            <p>Jornadas internacionales del 20 al 24 de febrero.</p>
-            <a href="#" class="news-link">Leer más →</a>
+          <ul class="lista-detalles">
+            <li><strong>Requisitos:</strong> Datos personales completos y clave robusta.</li>
+            <li><strong>Horarios:</strong> L-V: 8:00 AM - 5:00 PM</li>
+            <li><strong>Sedes:</strong> Caracas, Maracay, Puerto Cabello.</li>
+          </ul>
+        </div>
+
+        <div class="cuadro-informativo">
+          <div class="header-cuadro">
+            <i class="fas fa-newspaper"></i>
+            <h3>Noticias Recientes</h3>
           </div>
-          <div class="news-item">
-            <span class="news-date">15 Ene 2024</span>
-            <h4>Nuevos Laboratorios</h4>
-            <p>Inauguración de laboratorios de tecnología.</p>
-            <a href="#" class="news-link">Leer más →</a>
-          </div>
+          <article class="noticia-breve">
+            <span class="fecha">20 Ene 2024</span>
+            <h4>Convocatoria Investigación</h4>
+            <p>Abierto el proceso para nuevos proyectos innovadores.</p>
+            <a href="#" class="link-mas">Leer más →</a>
+          </article>
+        </div>
+
+      </section>
+      <div class="columnas-container">
+        <div class="columna">
+          <h3>MISION</h3>
+          <img src="/ppricipal/imagenes/light-bulb-alt.png" alt="" class="icono">
+
+          <p>"Unir mentes brillantes de la universidad para convertir ideas en proyectos tangibles.
+            Crear puentes entre egresados e investigadores que compartan visiones de innovación"
+
+          </p>
+        </div>
+
+
+        <div class="columna">
+          <h3>VISION</h3>
+          <img src="/ppricipal/imagenes/eye-alt.png" alt="" class="icono">
+          <p>"Construir la mayor comunidad de co-creación académica del país,Transformar el conocimiento
+            universitario en soluciones reales mediante colaboración"</p>
+
+        </div>
+
+        <div class="columna">
+          <h3>BLOG</h3>
+          <img src="/ppricipal/imagenes/menseje.png" alt="" class="icono">
+          <p>"Sigue el progreso de proyectos, encuentra co-investigadores y comparte avances.Conecta con
+            colegas,
+            descubre sinergias y haz crecer tu investigación"</p>
+
         </div>
       </div>
-
-      <!-- Redes Sociales -->
-      <div class="card social-section">
-        <h3><i class="fas fa-share-alt"></i> Síguenos</h3>
-        <div class="social-grid">
-          <a href="#" class="social-btn twitter"><i class="fab fa-twitter"></i></a>
-          <a href="#" class="social-btn facebook"><i class="fab fa-facebook"></i></a>
-          <a href="#" class="social-btn instagram"><i class="fab fa-instagram"></i></a>
-          <a href="#" class="social-btn linkedin"><i class="fab fa-linkedin"></i></a>
-          <a href="#" class="social-btn youtube"><i class="fab fa-youtube"></i></a>
-          <a href="#" class="social-btn tiktok"><i class="fab fa-tiktok"></i></a>
-        </div>
-        
-        <div class="links-section">
-          <h4><i class="fas fa-external-link-alt"></i> Enlaces Importantes</h4>
-          <div class="links-grid">
-            <a href="http://www.unefa.edu.ve" target="_blank">Sitio Web</a>
-            <a href="#" target="_blank">Portal Estudiantil</a>
-            <a href="#" target="_blank">Biblioteca Digital</a>
-            <a href="#" target="_blank">Calendario 2024</a>
-          </div>
-        </div>
-      </div>
-    </div>
-        <div class="columnas-container">
-            <div class="columna">
-                <h3>MISION</h3>
-                <img src="/ppricipal/imagenes/light-bulb-alt.png" alt="" class="icono">
-
-                <p>"Unir mentes brillantes de la universidad para convertir ideas en proyectos tangibles.
-                    Crear puentes entre egresados e investigadores que compartan visiones de innovación"
-
-                </p>
-            </div>
-            
-
-            <div class="columna">
-                <h3>VISION</h3>
-                <img src="/ppricipal/imagenes/eye-alt.png" alt="" class="icono">
-                <p>"Construir la mayor comunidad de co-creación académica del país,Transformar el conocimiento
-                    universitario en soluciones reales mediante colaboración"</p>
-
-            </div>
-
-            <div class="columna">
-                <h3>BLOG</h3>
-                <img src="/ppricipal/imagenes/menseje.png" alt="" class="icono">
-                <p>"Sigue el progreso de proyectos, encuentra co-investigadores y comparte avances.Conecta con
-                    colegas,
-                    descubre sinergias y haz crecer tu investigación"</p>
-
-            </div>
-        </div>
-    </main>
+  </main>
 
 
 
 
-    <!-- Pie de página -->
-    <footer>
-        <p>&copy; 2024 Mi Sitio Web. Todos los derechos reservados.</p>
-    </footer>
+  <!-- Pie de página -->
+  <footer>
+    <p>&copy; 2024 Mi Sitio Web. Todos los derechos reservados.</p>
+  </footer>
 
-    <script src="/ppricipal/script.js"></script>
+  <script src="/ppricipal/script.js"></script>
 
 
 </body>
