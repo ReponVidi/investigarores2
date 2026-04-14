@@ -57,66 +57,49 @@ function setupCreateProjectButtons() {
 }
 
 // Verificar que el usuario sea administrador
+// frontend/admin/script.js - CORREGIR ESTAS FUNCIONES
+
 async function checkAdminAccess() {
     try {
-        const response = await fetch('http://localhost:4000/auth/me', {
+        // CAMBIO: Usar la ruta real /api/user-profile
+        const response = await fetch('http://localhost:4000/api/user-profile', {
             credentials: 'include'
         });
 
         if (response.ok) {
             const userData = await response.json();
             
+            // CAMBIO: La propiedad en el JSON es isAdmin (según lo que pusimos en server.js)
             if (!userData.isAdmin) {
-                // No es administrador, redirigir al panel de usuario normal
-                alert('⚠️ No tienes permisos de administrador. Redirigiendo al panel de usuario...');
-                window.location.href = 'http://localhost:4000/usuario/usuario.html';
+                alert('⚠️ No tienes permisos de administrador.');
+                window.location.href = '/usuario/usuario.html';
                 return false;
             }
-            
-            console.log('Usuario verificado como administrador:', userData.email);
+            console.log('Acceso confirmado para:', userData.username);
             return true;
-        } else if (response.status === 401) {
-            // No autenticado, redirigir al login
-            window.location.href = 'http://localhost:4000/';
-            return false;
         } else {
-            throw new Error('Error al verificar permisos');
+            window.location.href = '/login';
+            return false;
         }
     } catch (error) {
-        console.error('Error verificando acceso de admin:', error);
-        alert('Error al verificar permisos. Redirigiendo...');
-        window.location.href = 'http://localhost:4000/';
+        console.error('Error verificando acceso:', error);
+        window.location.href = '/login';
         return false;
     }
 }
 
-// Cargar datos del usuario
 async function loadUserData() {
     try {
-        const response = await fetch('http://localhost:4000/auth/me', {
+        const response = await fetch('http://localhost:4000/api/user-profile', {
             credentials: 'include'
         });
 
         if (response.ok) {
             const userData = await response.json();
-            
-            // Mostrar información del usuario
-            const userInfoElement = document.getElementById('user-info');
             const userNameElement = document.getElementById('user-name');
-            
-            const firstName = userData.firstName || 'Administrador';
-            const lastName = userData.lastName || '';
-            const email = userData.email || '';
-            
-            if (userInfoElement) {
-                userInfoElement.innerHTML = `
-                    <h3>${firstName} ${lastName}</h3>
-                    <p>${email}</p>
-                `;
-            }
-            
             if (userNameElement) {
-                userNameElement.textContent = `${firstName} ${lastName}`;
+                // CAMBIO: Usar userData.username que es lo que envía el server
+                userNameElement.textContent = userData.username;
             }
         }
     } catch (error) {

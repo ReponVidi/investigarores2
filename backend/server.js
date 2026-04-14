@@ -45,12 +45,14 @@ app.get("/login", (req, res) => res.sendFile(path.join(__dirname, "../frontend/i
 app.get("/registro", (req, res) => res.sendFile(path.join(__dirname, "../frontend/registro/registros.html")));
 
 // Endpoint para obtener los datos del usuario logueado
+// server.js - ACTUALIZAR ESTE ENDPOINT
 app.get("/api/user-profile", (req, res) => {
     if (req.session.userId) {
-        // Si hay sesión, enviamos el nombre que guardamos al hacer login
         res.json({
             success: true,
-            username: req.session.username || "Usuario"
+            userId: req.session.userId,
+            username: req.session.username,
+            isAdmin: req.session.isAdmin || false // <--- VITAL: Enviar el rol
         });
     } else {
         res.status(401).json({ success: false, error: "No autorizado" });
