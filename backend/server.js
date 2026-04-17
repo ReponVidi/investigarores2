@@ -1,5 +1,5 @@
 // server.js (VERSION CORREGIDA)
-/*import express from "express";
+import express from "express";
 import axios from "axios";
 import dotenv from "dotenv";
 import cors from "cors";
@@ -175,11 +175,23 @@ app.get('/api/core/audit/:instruccion', async (req, res) => {
         console.error(`Error al consultar core.${instruccion}:`, error.message);
         res.status(500).json({ success: false, error: "Error en el servidor al extraer datos de auditoría." });
     }
-});*/
+});
+
+
+
+
+
+
+
+
+
+
+
+
 
 //Version para corriga local
 // server.js (VERSIÓN FINAL OPTIMIZADA)
-import express from "express";
+/*import express from "express";
 import axios from "axios";
 import dotenv from "dotenv";
 import cors from "cors";
@@ -325,4 +337,4 @@ app.get('/api/core/audit/:instruccion', async (req, res) => {
 // --- MANEJO 404 (Siempre al final) ---
 app.use((req, res) => res.status(404).json({ success: false, error: "Ruta no encontrada" }));
 
-app.listen(4000, () => console.log(`🚀 Servidor corriendo en http://localhost:4000`));
+app.listen(4000, () => console.log(`🚀 Servidor corriendo en http://localhost:4000`));*/
