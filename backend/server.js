@@ -1,13 +1,10 @@
 // server.js (VERSION CORREGIDA)
 import express from "express";
-import axios from "axios";
 import dotenv from "dotenv";
 import cors from "cors";
 import session from "express-session";
 import cookieParser from "cookie-parser";
 import rateLimit from 'express-rate-limit';
-import authRoutes from "./routes/authRoutes.js";
-import projectRoutes from "./routes/projectRoutes.js";
 import path from "path";
 import { fileURLToPath } from "url";
 import pool from "./config/db.js";
@@ -178,16 +175,3 @@ app.get('/api/core/audit/:instruccion', async (req, res) => {
         res.status(500).json({ success: false, error: "Error en el servidor al extraer datos de auditoría." });
     }
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
