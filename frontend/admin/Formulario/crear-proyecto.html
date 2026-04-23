@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear Proyecto - OpenProject</title>
+    <title>Crear Proyecto </title>
     <link rel="shortcut icon" href="../imagenes/lupa.png" type="image/x-icon">
     <link rel="stylesheet" href="estilo-unificado.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -13,8 +14,8 @@
     <!-- Contenedor principal con pestañas -->
     <div class="container">
         <div class="header">
-            <h1><i class="fas fa-clipboard-list"></i> Crear Nuevo Proyecto - OpenProject</h1>
-            <p>Creación de proyectos en la plataforma OpenProject</p>
+            <h1><i class="fas fa-clipboard-list"></i> Crear Nuevo Proyecto </h1>
+            <p>Creación de proyectos en la plataforma </p>
         </div>
 
         <!-- Solo MOSTRAMOS la pestaña que nos interesa -->
@@ -27,7 +28,7 @@
 
         <!-- Contenido de las pestañas -->
         <div class="tab-content">
-            
+
             <!-- Pestaña 2: Crear Proyecto OpenProject -->
             <div id="crear-proyecto" class="tab-pane active">
                 <div class="form-container">
@@ -41,25 +42,24 @@
                                 <div class="form-group full-width">
                                     <label for="nombreProyectoOP" class="required">Nombre del Proyecto</label>
                                     <input type="text" id="nombreProyectoOP" name="nombreProyectoOP" required
-                                           placeholder="Ej: Desarrollo de Sistema de Gestión">
+                                        placeholder="Ej: Desarrollo de Sistema de Gestión">
                                 </div>
-                                
+
                                 <div class="form-group full-width">
                                     <label for="descripcionOP">Descripción del Proyecto</label>
-                                    <textarea id="descripcionOP" name="descripcionOP" 
-                                              placeholder="Describe brevemente el propósito del proyecto..."></textarea>
+                                    <textarea id="descripcionOP" name="descripcionOP"
+                                        placeholder="Describe brevemente el propósito del proyecto..."></textarea>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label for="identificador" class="required">Identificador</label>
                                     <div class="input-with-button">
                                         <input type="text" id="identificador" name="identificador" required
-                                            placeholder="Ej: desarrollo-plataforma-vidi" 
-                                            maxlength="100"
+                                            placeholder="Ej: desarrollo-plataforma-vidi" maxlength="100"
                                             class="identificador-input">
-                                        <button type="button" class="btn-generar" onclick="generarIdentificador()" 
+                                        <button type="button" class="btn-generar" onclick="generarIdentificador()"
                                             title="Generar identificador automático">
-                                        <i class="fas fa-wand-magic-sparkles"></i>
+                                            <i class="fas fa-wand-magic-sparkles"></i>
                                         </button>
                                     </div>
                                     <small class="form-note">
@@ -79,14 +79,13 @@
                                 <div class="form-group">
                                     <label for="responsable" class="required">Responsable Principal</label>
                                     <input type="text" id="responsable" name="responsable" required
-                                           placeholder="Nombre y apellido del responsable">
+                                        placeholder="Nombre y apellido del responsable">
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label for="creador">Creador del Proyecto</label>
-                                    <input type="text" id="creador" name="creador" 
-                                           placeholder="Tu nombre completo" readonly
-                                           style="background-color: #f0f0f0;">
+                                    <input type="text" id="creador" name="creador" placeholder="Tu nombre completo"
+                                        readonly style="background-color: #f0f0f0;">
                                 </div>
                             </div>
                         </div>
@@ -101,7 +100,7 @@
                                     <label for="fechaInicioOP">Fecha de Inicio</label>
                                     <input type="date" id="fechaInicioOP" name="fechaInicioOP">
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label for="fechaFinOP">Fecha de Finalización Prevista</label>
                                     <input type="date" id="fechaFinOP" name="fechaFinOP">
@@ -118,7 +117,7 @@
                                 <i class="fas fa-eraser"></i> Limpiar Formulario
                             </button>
                             <button type="submit" class="btn btn-primary" id="btnCrear">
-                                <i class="fas fa-plus"></i> Crear Proyecto en OpenProject
+                                <i class="fas fa-plus"></i> Crear Proyecto
                             </button>
                             <button type="button" class="btn btn-success" onclick="volverAlPanel()">
                                 <i class="fas fa-arrow-left"></i> Volver al Panel
@@ -136,7 +135,8 @@
                             <p><strong>ID:</strong> <span id="proyectoId"></span></p>
                             <p><strong>Nombre:</strong> <span id="proyectoNombre"></span></p>
                             <p><strong>Identificador:</strong> <span id="proyectoIdentificador"></span></p>
-                            <p><strong>Enlace:</strong> <a id="proyectoEnlace" target="_blank">Ver en OpenProject</a></p>
+                            <p><strong>Enlace:</strong> <a id="proyectoEnlace" target="_blank">Ver en OpenProject</a>
+                            </p>
                         </div>
                         <button class="btn-cerrar" onclick="cerrarMensaje()">Cerrar</button>
                     </div>
@@ -146,11 +146,12 @@
     </div>
 
     <script src="script-unificado.js"></script>
-    
+
     <!-- Script adicional para asegurar que se abra directamente -->
 
-    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </body>
+
 </html>
