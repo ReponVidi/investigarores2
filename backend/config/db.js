@@ -15,6 +15,6 @@ const pool = new Pool({
     password: "sayed2819",
     database: "openprojectdb",
     port: 5432
-});*/
+});
 
 export default pool;
