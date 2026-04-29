@@ -1,21 +1,26 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Panel de Administración - OpenProject</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="shortcut icon" href="../usuario/imagenes/lupa.png" type="image/x-icon">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <title>Panel de Administración - OpenProject</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="../usuario/imagenes/lupa.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 </head>
 
 <body>
+    <button class="mobile-toggle" id="mobile-toggle">
+        <i class="fas fa-bars"></i>
+    </button>
     <!-- Sidebar -->
     <div class="sidebar">
         <div class="logo">
             <i class="fas fa-shield-alt"></i>
             <span>Administración</span>
         </div>
-        
+
         <div class="user-info">
             <div class="user-avatar admin-avatar">
                 <i class="fas fa-crown"></i>
@@ -27,26 +32,29 @@
                 </p>
             </div>
         </div>
-        
+
         <ul class="menu">
-            <li><a href="#" class="active" data-section="dashboard"><i class="fas fa-tachometer-alt"></i> Inicio</a></li>
+            <li><a href="#" class="active" data-section="dashboard"><i class="fas fa-tachometer-alt"></i> Inicio</a>
+            </li>
             <!--<li><a href="#" data-section="projects"><i class="fas fa-project-diagram"></i> Todos los Proyectos</a></li>-->
             <!--<li><a href="#" data-section="users"><i class="fas fa-users"></i> Usuarios</a></li>-->
             <!-- INICIO _ Modulo Core - Seguridad y Control -->
-            <li> <a href="./Control/control.html" id="control-seguridad-link"> <i class="fas fa-user-shield"></i> Control y Seguridad</a></li>
+            <li> <a href="./Control/control.html" id="control-seguridad-link"> <i class="fas fa-user-shield"></i>
+                    Control y Seguridad</a></li>
             <!-- FIN _ Modulo Core - Seguridad y Control -->
             <li><a href="#" data-section="reports"><i class="fas fa-chart-bar"></i> Fichas Tecnicas</a></li>
             <li><a href="#" data-section="settings"><i class="fas fa-cog"></i> Configuración</a></li>
             <!-- CAMBIO AQUÍ: Ruta corregida -->
-            <li><a href="./Formulario/crear-proyecto.html" id="crear-proyecto-link"><i class="fas fa-plus-circle"></i> Crear Proyecto</a></li>
+            <li><a href="./Formulario/crear-proyecto.html" id="crear-proyecto-link"><i class="fas fa-plus-circle"></i>
+                    Crear Proyecto</a></li>
         </ul>
     </div>
-    
+
     <!-- Main Content -->
     <div class="main-content">
         <div class="header">
             <h1 id="section-title"></h1>
-            
+
             <div class="user-actions">
                 <i class="fas fa-bell" id="notifications"></i>
                 <div class="user-menu">
@@ -72,12 +80,12 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Dashboard Content -->
         <div id="dashboard-section" class="content-section active">
-           
+
         </div>
-        
+
         <!-- Projects Content -->
         <div id="projects-section" class="content-section">
             <div class="section-header">
@@ -104,12 +112,14 @@
                         </tr>
                     </thead>
                     <tbody id="projects-table-body">
-                        <tr><td colspan="5">Cargando proyectos...</td></tr>
+                        <tr>
+                            <td colspan="5">Cargando proyectos...</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-        
+
         <!-- Users Content -->
         <div id="users-section" class="content-section">
             <div class="section-header">
@@ -132,12 +142,14 @@
                         </tr>
                     </thead>
                     <tbody id="users-table-body">
-                        <tr><td colspan="5">Cargando usuarios...</td></tr>
+                        <tr>
+                            <td colspan="5">Cargando usuarios...</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-        
+
         <!-- Reports Content -->
         <div id="reports-section" class="content-section">
             <div class="section-header">
@@ -150,7 +162,7 @@
                         <canvas id="projectsByStatusChart"></canvas>
                     </div>
                 </div>
-                
+
                 <div class="report-card">
                     <h3>Actividad por Mes</h3>
                     <div class="chart-container">
@@ -159,7 +171,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Settings Content -->
         <div id="settings-section" class="content-section">
             <div class="section-header">
@@ -177,7 +189,7 @@
                         <input type="text" id="openproject-url" value="http://openproject.vidiprueba.com" disabled>
                     </div>
                 </div>
-                
+
                 <div class="setting-group">
                     <h3><i class="fas fa-user-shield"></i> Administradores</h3>
                     <div class="setting-item">
@@ -194,4 +206,5 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
 </body>
+
 </html>

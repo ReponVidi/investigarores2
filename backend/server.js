@@ -10,13 +10,20 @@ import { fileURLToPath } from "url";
 import pool from "./config/db.js";
 import bcrypt from "bcrypt";
 
+pool.on('connect', (client) => {
+    client.query('SET search_path TO core, public');
+});
+
 dotenv.config();
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // CONFIGURACIONES BÁSICAS
-app.use(cors({ origin: 'http://localhost:4000', credentials: true }));
+app.use(cors({
+    origin: (origin, callback) => callback(null, true),
+    credentials: true
+}));
 app.use(express.json());
 app.use(cookieParser());
 app.use(session({
@@ -60,33 +67,42 @@ app.get("/api/user-profile", (req, res) => {
 // ==========================================
 app.post("/login", authLimiter, async (req, res) => {
     try {
-        const { username, password } = req.body;
+        const { username, password } = req.body; // Este 'username' viene del input del formulario
 
-        // 1. Buscamos id, login Y la columna admin
+        // 1. Buscamos al usuario por su 'username' O por su 'email'
+        // Usamos las columnas exactas de tu captura: username, email, password_hash, rol_id
         const userRes = await pool.query(
-            'SELECT id, login, firstname, admin FROM public.users WHERE login = $1',
+            'SELECT id, nombre, username, email, password_hash, rol_id FROM core.usuarios WHERE username = $1 OR email = $1',
             [username]
         );
 
-        if (userRes.rows.length === 0) return res.status(401).json({ success: false, error: "Usuario no encontrado." });
+        if (userRes.rows.length === 0) {
+            return res.status(401).json({ success: false, error: "Credenciales no encontradas." });
+        }
 
         const user = userRes.rows[0];
-        const passRes = await pool.query('SELECT hashed_password FROM public.user_passwords WHERE user_id = $1', [user.id]);
+        console.log("Contraseña recibida:", password);
+        console.log("Hash en DB:", user.password_hash);
+        // 2. Comparamos la contraseña con el hash de la columna 'password_hash'
+        const validPassword = await bcrypt.compare(password, user.password_hash);
 
-        if (passRes.rows.length === 0) return res.status(401).json({ success: false, error: "Sin contraseña." });
+        if (!validPassword) {
+            return res.status(401).json({ success: false, error: "Contraseña incorrecta." });
+        }
 
-        const validPassword = await bcrypt.compare(password, passRes.rows[0].hashed_password);
-        if (!validPassword) return res.status(401).json({ success: false, error: "Contraseña incorrecta." });
+        // 3. Verificamos el Rol (Según tu captura, el ID 3 es Administrador)
+        const isAdmin = (user.rol_id === 3);
 
-        // 2. Guardamos en la sesión si es admin o no
+        // 4. Guardamos datos esenciales en la sesión
         req.session.userId = user.id;
-        req.session.username = user.login;
-        req.session.isAdmin = user.admin; // true o false según la DB
+        req.session.username = user.username; // Guardamos el login corto
+        req.session.nombreReal = user.nombre; // El nombre completo (ej: "carmari reyes")
+        req.session.isAdmin = isAdmin;
 
-        console.log(`✅ Login: ${user.login} | Admin: ${user.admin}`);
+        console.log(`✅ Sesión iniciada: ${user.username} | Rol ID: ${user.rol_id} (Admin: ${isAdmin})`);
 
-        // 3. Enviamos la redirección correcta según el rol
-        const destination = user.admin ? "/admin/admin.html" : "/usuario/usuario.html";
+        // 5. Redirección lógica
+        const destination = isAdmin ? "/admin/admin.html" : "/usuario/usuario.html";
 
         return res.json({
             success: true,
@@ -94,51 +110,143 @@ app.post("/login", authLimiter, async (req, res) => {
         });
 
     } catch (error) {
-        console.error("❌ Error en Login:", error.message);
-        res.status(500).json({ success: false, error: "Error en el servidor." });
+        console.error("❌ Error en el proceso de Login:", error.message);
+        res.status(500).json({ success: false, error: "Error interno del servidor." });
+    }
+});
+
+
+app.post("/create-user", createUserLimiter, async (req, res) => {
+    const client = await pool.connect();
+    try {
+        // Desestructuramos usando 'username' (que enviamos desde el JS corregido)
+        const { username, firstName, lastName, email, password, confirmPassword } = req.body;
+
+        if (password !== confirmPassword) {
+            return res.status(400).json({ success: false, error: "Las contraseñas no coinciden." });
+        }
+
+        await client.query('BEGIN');
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        // Nombre completo para la columna 'nombre'
+        const nombreCompleto = `${firstName} ${lastName}`;
+
+        // Inserción en core.usuarios
+        // Columnas según tu imagen: id (serial), nombre, email, password_hash, rol_id, username
+        const query = `
+            INSERT INTO core.usuarios (nombre, email, password_hash, rol_id, username)
+            VALUES ($1, $2, $3, $4, $5)
+            RETURNING id, username;
+        `;
+
+        const values = [nombreCompleto, email, hashedPassword, 1, username];
+        const userRes = await client.query(query, values);
+
+        await client.query('COMMIT');
+
+        res.status(201).json({
+            success: true,
+            message: "Usuario creado exitosamente",
+            username: userRes.rows[0].username
+        });
+
+    } catch (error) {
+        if (client) await client.query('ROLLBACK');
+        console.error("❌ Error:", error.message);
+
+        let msg = "Error en el servidor";
+        if (error.message.includes('unique constraint')) {
+            msg = "El nombre de usuario o correo ya existen.";
+        }
+        res.status(500).json({ success: false, error: msg });
+    } finally {
+        client.release();
+    }
+});
+// ... (Todo tu código de /create-user arriba)
+
+// ==========================================
+// RUTA 3: GESTIÓN DE PROYECTOS UNEFA (NUEVA)
+// ==========================================
+// REGISTRO DE USUARIOS
+app.post('/usuarios/register', async (req, res) => {
+    const { nombre, email, password, rol_id } = req.body; // Datos que vienen del frontend
+
+    try {
+        const query = `
+            INSERT INTO core.usuarios (nombre, email, password_hash, rol_id)
+            VALUES ($1, $2, $3, $4)
+            RETURNING id, nombre, email;
+        `;
+
+        // Los valores deben coincidir EXACTAMENTE con los $1, $2, $3, $4
+        const values = [nombre, email, password, rol_id || 1];
+        const result = await pool.query(query, values);
+
+        console.log(`✅ Usuario registrado: ${nombre}`);
+        res.json({ exito: true, usuario: result.rows[0] });
+
+    } catch (error) {
+        console.error("❌ Error BD:", error.message);
+        res.status(500).json({ exito: false, error: error.message });
+    }
+});
+
+// REGISTRO DE PROYECTOS
+app.post('/projects/create', async (req, res) => {
+    const { nombre, identificador, descripcion, responsable, fecha_inicio, fecha_fin } = req.body;
+
+    try {
+        const query = `
+            INSERT INTO core.proyectos_unefa 
+            (nombre, identificador, descripcion, responsable, fecha_inicio, fecha_fin, author_id, estatus_id, carrera_id)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+            RETURNING *;
+        `;
+
+        // Debes completar los campos obligatorios (IDs) que pide tu nueva base de datos
+        const values = [
+            nombre,
+            identificador,
+            descripcion,
+            responsable,
+            fecha_inicio,
+            fecha_fin,
+            1, // author_id (Carmen)
+            1, // estatus_id
+            1  // carrera_id
+        ];
+
+        const result = await pool.query(query, values);
+        res.json({ exito: true, proyecto: result.rows[0] });
+
+    } catch (error) {
+        console.error("❌ Error en Proyecto:", error.message);
+        res.status(500).json({ exito: false, error: error.message });
     }
 });
 
 // ==========================================
-// RUTA 2: REGISTRO (POST) - INDEPENDIENTE
+// RUTA DE CIERRE DE SESIÓN (Faltante)
 // ==========================================
-app.post("/create-user", createUserLimiter, async (req, res) => {
-    const client = await pool.connect();
-    try {
-        const { login, firstName, lastName, email, password, confirmPassword } = req.body;
-        if (password !== confirmPassword) return res.status(400).json({ error: "Las contraseñas no coinciden." });
-
-        await client.query('BEGIN');
-        const userRes = await client.query(
-            `INSERT INTO public.users (login, firstname, lastname, mail, admin, status, language, type, created_at, updated_at)
-             VALUES ($1, $2, $3, $4, false, 1, 'es', 'User', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP) RETURNING id`,
-            [login, firstName, lastName, email]
-        );
-
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
-        await client.query(
-            `INSERT INTO public.user_passwords (user_id, hashed_password, salt, created_at, updated_at, type)
-             VALUES ($1, $2, $3, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'UserPassword::Internal')`,
-            [userRes.rows[0].id, hashedPassword, salt]
-        );
-
-        await client.query('COMMIT');
-        console.log(`✅ Registro exitoso: ${login}`);
-        res.status(201).json({ success: true, message: "Usuario creado", redirect: "/usuario/usuario.html" });
-    } catch (error) {
-        if (client) await client.query('ROLLBACK');
-        console.error("❌ Error en Registro:", error.message);
-        res.status(500).json({ success: false, error: error.message });
-    } finally {
-        client.release();
-    }
+app.get("/logout", (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            console.error("Error al destruir la sesión:", err);
+            return res.status(500).send("No se pudo cerrar la sesión");
+        }
+        res.clearCookie('connect.sid'); // Limpia la cookie del navegador
+        res.redirect("/login"); // Redirige al login de forma limpia
+    });
 });
 
 // MANEJO 404
 app.use((req, res) => res.status(404).json({ success: false, error: "Ruta no encontrada" }));
 
-app.listen(4000, () => console.log(`🚀 Servidor en puerto 4000`));
+app.listen(4000, '0.0.0.0', () => console.log(`🚀 Servidor listo en el puerto 4000`));
 
 //Añadir estas rutas para el esquema CORE
 

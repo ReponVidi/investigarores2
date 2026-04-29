@@ -49,9 +49,9 @@ document.addEventListener('DOMContentLoaded', () => {
   function setupNavigation() {
     // Botones de navegación
     const actions = {
-      loginOpenProject: () => window.location.href = "http://localhost:4000/login",
-      backToHome: () => window.location.href = "http://localhost:4000/",
-      goToLogin: () => window.location.href = "http://localhost:4000/login",
+      loginOpenProject: () => window.location.href = "/login",
+      backToHome: () => window.location.href = " ",
+      goToLogin: () => window.location.href = "/login",
       closeSuccess: () => {
         document.getElementById('mensajeExito').style.display = 'none';
         document.getElementById('overlay').style.display = 'none';
@@ -150,55 +150,65 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Preparar datos
+    // ... dentro del evento del formulario ...
     const formData = new FormData(form);
     const userData = Object.fromEntries(formData.entries());
+
+    // 1. CORRECCIÓN DE MAPEO (Vital para tu DB)
+    userData.username = userData.login; // Convertimos 'login' del HTML a 'username' para el server
     userData.confirmPassword = confirmInput.value;
 
-    // Mostrar progreso
+    // Borramos el campo 'login' original para enviar un JSON limpio
+    delete userData.login;
+
     showProgress();
     showMessage('Creando usuario...', 'info');
 
     try {
-    const response = await fetch("http://localhost:4000/create-user", {
+      const response = await fetch("/create-user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userData)
-    });
+      });
 
-    // Si la conexión se corta, el código saltará directamente al catch abajo.
-    const data = await response.json();
+      // Validamos que la respuesta sea JSON antes de procesar
+      const data = await response.json();
 
-    if (response.ok && data.success) {
-        // SOLO AQUÍ ES ÉXITO REAL
-        hideProgress(); // Detenemos cualquier barra de carga
+      if (response.ok && data.success) {
+        hideProgress();
         showMessage('✅ ¡Usuario creado exitosamente!', 'success');
+
+        // Pasamos los datos correctos al modal
         showSuccessModal(data, userData);
-        
-        // El countdown solo empieza si el servidor confirmó el COMMIT
-        startCountdown(data.redirect); 
-    } else {
-        // El servidor respondió, pero con un error (ej: usuario duplicado)
-        throw new Error(data.error || "Error del servidor");
+
+        // Si el server no envía redirect, usamos uno por defecto
+        const nextStep = data.redirect || "/login";
+        startCountdown(nextStep);
+      } else {
+        // Captura errores de lógica del servidor (ej: duplicados)
+        throw new Error(data.error || "Error al procesar el registro");
+      }
+
+    } catch (error) {
+      console.error("Error detectado en la comunicación:", error);
+      hideProgress();
+
+      // Manejo inteligente de errores de red (ERR_CONNECTION_RESET / Failed to fetch)
+      let friendlyMsg = error.message;
+
+      if (error.name === 'TypeError' || error.message.includes('fetch')) {
+        friendlyMsg = "El servidor no responde. Verifica que la terminal de Node.js esté corriendo.";
+      }
+
+      showMessage(`❌ ${friendlyMsg}`, 'error');
+
+      // Garantía: Ocultar modales si algo falló
+      const modal = document.getElementById('mensajeExito');
+      const overlay = document.getElementById('overlay');
+      if (modal) modal.style.display = 'none';
+      if (overlay) overlay.style.display = 'none';
     }
-
-} catch (error) {
-    // AQUÍ ES DONDE CAERÁ EL ERR_CONNECTION_RESET
-    console.error("Error detectado:", error);
-    hideProgress();
-    
-    // Si el error es de conexión, el mensaje será diferente
-    const msg = error.message === 'Failed to fetch' 
-        ? "El servidor se desconectó inesperadamente. Revisa la terminal de VS Code." 
-        : error.message;
-        
-    showMessage(`❌ ${msg}`, 'error');
-    
-    // IMPORTANTE: Asegúrate de que el modal de éxito NO se muestre aquí
-    document.getElementById('mensajeExito').style.display = 'none';
-    document.getElementById('overlay').style.display = 'none';
   }
-}
-
 
   // FUNCIONES DE UI
   function showMessage(text, type) {

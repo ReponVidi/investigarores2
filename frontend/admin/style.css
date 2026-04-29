@@ -122,7 +122,8 @@ body {
     font-size: 15px;
 }
 
-.menu a:hover, .menu a.active {
+.menu a:hover,
+.menu a.active {
     background-color: rgba(255, 255, 255, 0.15);
     color: var(--admin-accent);
 }
@@ -270,8 +271,15 @@ body {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Stats Cards */
@@ -536,62 +544,115 @@ td {
     min-height: 100px;
 }
 
-/* Responsive */
+/* ================================
+   OPTIMIZACIÓN RESPONSIVE PRO
+================================ */
+
+/* Botón de toggle (oculto por defecto en PC) */
+.mobile-toggle {
+    display: none;
+    background: var(--admin-primary);
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 20px;
+    margin-right: 15px;
+}
+
+/* Tabletas y Laptops pequeñas (1200px - 992px) */
 @media (max-width: 1200px) {
     .dashboard-grid {
         grid-template-columns: 1fr;
+        /* Una columna para el dashboard */
     }
-}
 
-@media (max-width: 992px) {
     .reports-container {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     }
 }
 
+/* Móviles y Tablets (Menos de 768px) */
 @media (max-width: 768px) {
     body {
         flex-direction: column;
+        /* Apilamos sidebar y contenido */
     }
-    
+
+    .mobile-toggle {
+        display: block;
+        /* Mostramos el botón de menú */
+    }
+
+    /* Sidebar tipo Overlay (Se desliza desde la izquierda) */
     .sidebar {
-        width: 100%;
+        position: fixed;
+        left: -250px;
+        /* Escondida por defecto */
+        top: 0;
+        height: 100vh;
+        z-index: 2000;
+        transition: all 0.4s ease;
+        width: 250px;
+    }
+
+    .sidebar.active {
+        left: 0;
+        /* Aparece al hacer click */
+    }
+
+    .main-content {
         padding: 15px;
+        width: 100%;
     }
-    
-    .menu {
-        display: flex;
+
+    /* Ajuste de cabecera */
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .user-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    /* Tablas responsivas (Scroll horizontal para que no se rompan) */
+    .table-container {
         overflow-x: auto;
-        margin-bottom: 10px;
     }
-    
-    .menu li {
-        margin-bottom: 0;
-        margin-right: 15px;
+
+    table {
+        min-width: 600px;
+        /* Forzamos scroll si la pantalla es muy chica */
     }
-    
-    .menu a {
-        white-space: nowrap;
-    }
-    
+
+    /* Estadísticas en 2 columnas */
     .stats-container {
         grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
     }
 }
 
-@media (max-width: 576px) {
+/* Teléfonos Pequeños (Menos de 480px) */
+@media (max-width: 480px) {
     .stats-container {
         grid-template-columns: 1fr;
+        /* Una sola columna de stats */
     }
-    
-    .section-header {
-        flex-direction: column;
-        gap: 15px;
-        align-items: flex-start;
+
+    .header h1 {
+        font-size: 22px;
     }
-    
-    .section-actions {
-        width: 100%;
-        justify-content: flex-start;
+
+    .user-trigger {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+
+    .stat-card .value {
+        font-size: 24px;
     }
 }

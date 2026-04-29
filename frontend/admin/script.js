@@ -1,29 +1,29 @@
 // frontend/admin/script.js
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     console.log('DOM cargado - Panel de Administración');
-    
+
     // Verificar si el usuario es administrador
     checkAdminAccess();
-    
+
     // Cargar datos del usuario
     loadUserData();
-    
+
     // Configurar navegación entre secciones
     setupNavigation();
-    
+
     // Configurar menú desplegable
     setupUserMenu();
-    
+
     // Configurar logout
     setupLogout();
-    
+
     // Cargar datos del dashboard
     loadDashboardData();
-    
+
     // Configurar botón para cambiar a vista usuario
     setupSwitchToUserPanel();
-    
+
     // SOLUCIÓN: Configurar botones de "Crear Proyecto"
     setupCreateProjectButtons();
 });
@@ -31,24 +31,24 @@ document.addEventListener('DOMContentLoaded', function() {
 // SOLUCIÓN: Configurar todos los botones de "Crear Proyecto"
 function setupCreateProjectButtons() {
     console.log('Configurando botones de creación de proyectos...');
-    
+
     // Botón en el sidebar
     const sidebarLink = document.getElementById('crear-proyecto-link');
     if (sidebarLink) {
         console.log('Configurando botón del sidebar:', sidebarLink.href);
-        sidebarLink.addEventListener('click', function(e) {
+        sidebarLink.addEventListener('click', function (e) {
             e.preventDefault();
             const adminPath = './Formulario/crear-proyecto.html';
             console.log('Navegando a:', adminPath);
             window.location.href = adminPath;
         });
     }
-    
+
     // Botón en la sección de proyectos
     const nuevoProyectoBtn = document.getElementById('nuevo-proyecto-btn');
     if (nuevoProyectoBtn) {
         console.log('Configurando botón "Nuevo Proyecto"');
-        nuevoProyectoBtn.addEventListener('click', function() {
+        nuevoProyectoBtn.addEventListener('click', function () {
             const adminPath = './Formulario/crear-proyecto.html';
             console.log('Navegando a:', adminPath);
             window.location.href = adminPath;
@@ -62,13 +62,13 @@ function setupCreateProjectButtons() {
 async function checkAdminAccess() {
     try {
         // CAMBIO: Usar la ruta real /api/user-profile
-        const response = await fetch('http://localhost:4000/api/user-profile', {
+        const response = await fetch('/api/user-profile', {
             credentials: 'include'
         });
 
         if (response.ok) {
             const userData = await response.json();
-            
+
             // CAMBIO: La propiedad en el JSON es isAdmin (según lo que pusimos en server.js)
             if (!userData.isAdmin) {
                 alert('⚠️ No tienes permisos de administrador.');
@@ -90,7 +90,7 @@ async function checkAdminAccess() {
 
 async function loadUserData() {
     try {
-        const response = await fetch('http://localhost:4000/api/user-profile', {
+        const response = await fetch('/api/user-profile', {
             credentials: 'include'
         });
 
@@ -112,7 +112,7 @@ function setupNavigation() {
     const menuItems = document.querySelectorAll('.menu a[data-section]');
     const contentSections = document.querySelectorAll('.content-section');
     const sectionTitle = document.getElementById('section-title');
-    
+
     // Títulos de las secciones
     const sectionTitles = {
         'dashboard': 'Dashboard de Administración',
@@ -121,31 +121,31 @@ function setupNavigation() {
         'reports': 'Fichas Técnicas',
         'settings': 'Configuración del Sistema'
     };
-    
+
     menuItems.forEach(item => {
-        item.addEventListener('click', function(e) {
+        item.addEventListener('click', function (e) {
             e.preventDefault();
-            
+
             // Obtener la sección a mostrar
             const sectionId = this.getAttribute('data-section');
-            
+
             // Actualizar título
             if (sectionTitle && sectionTitles[sectionId]) {
                 sectionTitle.textContent = sectionTitles[sectionId];
             }
-            
+
             // Actualizar menú activo
             menuItems.forEach(i => i.classList.remove('active'));
             this.classList.add('active');
-            
+
             // Mostrar sección correspondiente
             contentSections.forEach(section => {
                 section.classList.remove('active');
                 if (section.id === `${sectionId}-section`) {
                     section.classList.add('active');
-                    
+
                     // Cargar datos de la sección si es necesario
-                    switch(sectionId) {
+                    switch (sectionId) {
                         case 'projects':
                             loadProjectsData();
                             break;
@@ -163,13 +163,13 @@ function setupNavigation() {
             });
         });
     });
-    
+
     // Configurar botones de actualización
     const refreshProjectsBtn = document.getElementById('refreshProjects');
     if (refreshProjectsBtn) {
         refreshProjectsBtn.addEventListener('click', loadProjectsData);
     }
-    
+
     const refreshUsersBtn = document.getElementById('refreshUsers');
     if (refreshUsersBtn) {
         refreshUsersBtn.addEventListener('click', loadUsersData);
@@ -180,21 +180,21 @@ function setupNavigation() {
 function setupUserMenu() {
     const userMenuTrigger = document.getElementById('userMenuTrigger');
     const userDropdown = document.getElementById('userDropdown');
-    
+
     if (userMenuTrigger && userDropdown) {
-        userMenuTrigger.addEventListener('click', function(e) {
+        userMenuTrigger.addEventListener('click', function (e) {
             e.stopPropagation();
             userDropdown.classList.toggle('active');
         });
-        
-        document.addEventListener('click', function(e) {
+
+        document.addEventListener('click', function (e) {
             if (!userMenuTrigger.contains(e.target) && !userDropdown.contains(e.target)) {
                 userDropdown.classList.remove('active');
             }
         });
-        
+
         // Cerrar menú con Escape
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') {
                 userDropdown.classList.remove('active');
             }
@@ -206,12 +206,11 @@ function setupUserMenu() {
 function setupLogout() {
     const logoutBtn = document.getElementById('logoutBtn');
     if (logoutBtn) {
-        logoutBtn.addEventListener('click', function(e) {
+        logoutBtn.addEventListener('click', function (e) {
             e.preventDefault();
-            
-            const confirmLogout = confirm('¿Estás seguro de que quieres cerrar sesión?');
-            if (confirmLogout) {
-                window.location.href = 'http://localhost:4000/auth/logout';
+            if (confirm('¿Estás seguro de que quieres cerrar sesión?')) {
+                // REDIRECCIÓN DIRECTA A LA RUTA DEL SERVIDOR
+                window.location.href = '/logout';
             }
         });
     }
@@ -221,9 +220,9 @@ function setupLogout() {
 function setupSwitchToUserPanel() {
     const switchBtn = document.getElementById('switchToUserPanel');
     if (switchBtn) {
-        switchBtn.addEventListener('click', function(e) {
+        switchBtn.addEventListener('click', function (e) {
             e.preventDefault();
-            window.location.href = 'http://localhost:4000/usuario/usuario.html';
+            window.location.href = '/usuario/usuario.html';
         });
     }
 }
@@ -232,13 +231,13 @@ function setupSwitchToUserPanel() {
 async function loadDashboardData() {
     try {
         // Obtener token de sesión
-        const userResponse = await fetch('http://localhost:4000/auth/me', {
+        const userResponse = await fetch('/auth/me', {
             credentials: 'include'
         });
-        
+
         if (userResponse.ok) {
             const userData = await userResponse.json();
-            
+
             // Datos de ejemplo para el dashboard
             const dashboardData = {
                 totalProjects: 24,
@@ -246,20 +245,20 @@ async function loadDashboardData() {
                 activeProjects: 18,
                 weekActivity: 47
             };
-            
+
             // Actualizar estadísticas
             document.getElementById('total-projects').textContent = dashboardData.totalProjects;
             document.getElementById('active-users').textContent = dashboardData.activeUsers;
             document.getElementById('active-projects').textContent = dashboardData.activeProjects;
             document.getElementById('week-activity').textContent = dashboardData.weekActivity;
-            
+
             // Actualizar proyectos recientes
             const recentProjects = [
                 { name: 'Desarrollo Plataforma VIDI', identifier: 'vidi-plataforma', status: 'Activo', created: '2024-01-15' },
                 { name: 'Investigación IA', identifier: 'ia-investigacion', status: 'En progreso', created: '2024-01-10' },
                 { name: 'Sistema Gestión', identifier: 'sistema-gestion', status: 'Completado', created: '2023-12-20' }
             ];
-            
+
             const recentProjectsDiv = document.getElementById('recent-projects');
             if (recentProjectsDiv) {
                 recentProjectsDiv.innerHTML = recentProjects.map(project => `
@@ -270,7 +269,7 @@ async function loadDashboardData() {
                     </div>
                 `).join('');
             }
-            
+
             // Actualizar actividad reciente
             const recentActivityDiv = document.getElementById('recent-activity');
             if (recentActivityDiv) {
@@ -310,7 +309,7 @@ async function loadProjectsData() {
                     </td>
                 </tr>
             `;
-            
+
             // Datos de ejemplo
             setTimeout(() => {
                 const exampleProjects = [
@@ -320,7 +319,7 @@ async function loadProjectsData() {
                     { name: 'App Móvil', identifier: 'app-movil', status: 'En pausa', created: '2023-12-15', id: 4 },
                     { name: 'Base de Datos', identifier: 'base-datos', status: 'Activo', created: '2023-12-10', id: 5 }
                 ];
-                
+
                 projectsTableBody.innerHTML = exampleProjects.map(project => `
                     <tr>
                         <td>${project.name}</td>
@@ -342,7 +341,7 @@ async function loadProjectsData() {
                         </td>
                     </tr>
                 `).join('');
-                
+
                 // Agregar estilos para los badges de estado
                 const style = document.createElement('style');
                 style.textContent = `
@@ -371,7 +370,7 @@ async function loadProjectsData() {
                     }
                 `;
                 document.head.appendChild(style);
-                
+
             }, 1000);
         }
     } catch (error) {
@@ -403,14 +402,14 @@ async function loadUsersData() {
                 </td>
             </tr>
         `;
-        
+
         setTimeout(() => {
             const exampleUsers = [
                 { name: 'Ana García', email: 'ana@unefa.edu.ve', login: 'agarcia', status: 'Activo', lastAccess: '2024-01-20' },
                 { name: 'Carlos López', email: 'carlos@unefa.edu.ve', login: 'clopez', status: 'Activo', lastAccess: '2024-01-19' },
                 { name: 'María Rodríguez', email: 'maria@unefa.edu.ve', login: 'mrodriguez', status: 'Inactivo', lastAccess: '2023-12-15' }
             ];
-            
+
             usersTableBody.innerHTML = exampleUsers.map(user => `
                 <tr>
                     <td>${user.name}</td>
@@ -424,7 +423,7 @@ async function loadUsersData() {
                     <td>${user.lastAccess}</td>
                 </tr>
             `).join('');
-            
+
             // Agregar estilos para los estados de usuario
             const style = document.createElement('style');
             style.textContent = `
@@ -439,7 +438,7 @@ async function loadUsersData() {
                 .user-status.inactive { background: #f8d7da; color: #721c24; }
             `;
             document.head.appendChild(style);
-            
+
         }, 1000);
     }
 }
@@ -471,7 +470,7 @@ async function loadReportsData() {
                 }
             });
         }
-        
+
         // Gráfico de actividad por mes
         const activityByMonthCtx = document.getElementById('activityByMonthChart');
         if (activityByMonthCtx) {
@@ -515,4 +514,25 @@ async function loadSettingsData() {
         `;
     }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const toggleBtn = document.getElementById('mobile-toggle');
+    const sidebar = document.querySelector('.sidebar');
+
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+    }
+
+    // Cerrar el menú al hacer click en una opción (en móviles)
+    const menuLinks = document.querySelectorAll('.menu a');
+    menuLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth <= 768) {
+                sidebar.classList.remove('active');
+            }
+        });
+    });
+});
 

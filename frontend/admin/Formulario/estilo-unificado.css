@@ -4,7 +4,12 @@
 body {
     margin: 0;
     font-family: "Poppins", sans-serif;
-    background: #f4f8f4;
+    /* Imagen de fondo */
+    background-image: linear-gradient(rgba(244, 248, 244, 0.8), rgba(244, 248, 244, 0.8)), url('../Formulario/imagenes/fondo.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
     color: #1c3b1a;
 }
 
@@ -15,7 +20,7 @@ body {
     padding: 20px;
     background: #ffffff;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 /* ===============================
@@ -110,6 +115,28 @@ body {
     margin-top: 20px;
 }
 
+.btn-back {
+    background-color: #f8f9fa;
+    color: #1a5f14;
+    /* El verde que usas en tu PDF */
+    border: 1px solid #1a5f14;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.btn-back:hover {
+    background-color: #1a5f14;
+    color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
 .form-section {
     margin-bottom: 25px;
     padding: 20px;
@@ -142,7 +169,9 @@ body {
     color: red;
 }
 
-input, textarea, select {
+input,
+textarea,
+select {
     width: 100%;
     padding: 10px;
     border-radius: 6px;
@@ -153,10 +182,12 @@ input, textarea, select {
     box-sizing: border-box;
 }
 
-input:focus, textarea:focus, select:focus {
+input:focus,
+textarea:focus,
+select:focus {
     outline: none;
     border-color: #2e7d32;
-    box-shadow: 0 0 5px rgba(46,125,50,0.3);
+    box-shadow: 0 0 5px rgba(46, 125, 50, 0.3);
 }
 
 textarea {
@@ -222,7 +253,8 @@ textarea {
     border-radius: 6px;
 }
 
-.btn-add, .btn-remove {
+.btn-add,
+.btn-remove {
     padding: 6px 10px;
     border: none;
     border-radius: 6px;
@@ -365,8 +397,15 @@ textarea {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-5px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* ===============================
@@ -451,25 +490,25 @@ textarea {
         margin: 20px auto;
         padding: 15px;
     }
-    
+
     .tabs {
         flex-direction: column;
     }
-    
+
     .tab-button {
         width: 100%;
         justify-content: center;
     }
-    
+
     .btn-group {
         flex-direction: column;
     }
-    
+
     .btn {
         width: 100%;
         min-width: auto;
     }
-    
+
     .form-grid {
         gap: 10px;
     }

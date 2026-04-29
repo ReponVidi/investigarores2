@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (botonRegistro) {
         botonRegistro.addEventListener("click", () => {
             // Redirige a la página de inicio de sesión
-            window.location.href = "http://localhost:4000/registro";
+            window.location.href = "/registro";
         });
     }
 
@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (loginBtn) {
         loginBtn.addEventListener("click", () => {
             // Redirección al inicio de sesión de OpenProject
-            window.location.href = "http://localhost:4000/login";
+            window.location.href = "/login";
         });
     }
 
@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // Función para obtener datos del usuario desde el backend
 async function getUserData() {
     try {
-        const response = await fetch('http://localhost:4000/auth/me', {
+        const response = await fetch('/auth/me', {
             credentials: 'include' // Importante: incluye cookies de sesión
         });
 
@@ -66,7 +66,7 @@ async function showRealUserWelcome() {
         loginBtn.textContent = `Bienvenido, ${firstName}`;
         loginBtn.style.backgroundColor = '#4CAF50'; // Verde para indicar sesión activa
         loginBtn.onclick = function () {
-            window.location.href = "http://localhost:4000/usuario/usuario.html";
+            window.location.href = "/usuario/usuario.html";
         };
     }
 }
