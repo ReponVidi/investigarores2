@@ -1,0 +1,249 @@
+:root {
+    --primary-blue: #003366;
+    /* Azul UNEFA */
+    --accent-blue: #0056b3;
+    --bg-light: #f4f7f9;
+    --white: #ffffff;
+    --text-dark: #1a1a1a;
+    --sidebar-width: 260px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    display: flex;
+}
+
+/* Sidebar Estilo Profesional */
+.sidebar {
+    width: var(--sidebar-width);
+    height: 100vh;
+    background: var(--primary-blue);
+    color: var(--white);
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-brand {
+    padding: 0 25px 30px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.sidebar-brand img {
+    width: 40px;
+    filter: brightness(0) invert(1);
+    /* Pone el logo en blanco */
+}
+
+.sidebar h2 {
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+}
+
+nav {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.7);
+    padding: 15px 25px;
+    font-weight: 600;
+    transition: 0.3s;
+    border-left: 4px solid transparent;
+}
+
+nav a:hover,
+nav a.active {
+    color: var(--white);
+    background: rgba(255, 255, 255, 0.1);
+    border-left: 4px solid var(--white);
+}
+
+.logout-link {
+    margin-top: auto;
+    color: #ff4d4d;
+}
+
+.logout-link:hover {
+    background: rgba(255, 77, 77, 0.1);
+}
+
+/* Contenido Principal */
+.main-content {
+    margin-left: var(--sidebar-width);
+    width: calc(100% - var(--sidebar-width));
+    padding: 40px;
+}
+
+header {
+    margin-bottom: 40px;
+}
+
+header h1 {
+    font-size: 2rem;
+    color: var(--primary-blue);
+}
+
+header p {
+    color: #666;
+    margin-top: 5px;
+}
+
+/* Tarjetas de Estadísticas */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 25px;
+}
+
+.card {
+    background: var(--white);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s;
+    border-bottom: 4px solid var(--primary-blue);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card h3 {
+    font-size: 0.9rem;
+    color: #888;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.card p {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primary-blue);
+}
+
+/* Píldora de estado superior */
+.dashboard-header-stats {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+.status-pill {
+    background: white;
+    padding: 10px 20px;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.dot.pulse {
+    height: 10px;
+    width: 10px;
+    background-color: #28a745;
+    border-radius: 50%;
+    box-shadow: 0 0 0 rgba(40, 167, 69, 0.4);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(40, 167, 69, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
+    }
+}
+
+/* Contenedor del Mapa */
+/* Esto afecta a todos los estados del mapa */
+#venezuela-map svg path {
+    fill: #76a57f !important;
+    /* El verde que te gusta */
+    stroke: #ffffff;
+    stroke-width: 0.5;
+}
+
+/* Esto obliga al Distrito Capital a resaltar */
+#estado-usuario {
+    fill: #003366 !important;
+    /* Azul UNEFA */
+    filter: drop-shadow(0 0 15px rgba(0, 51, 102, 0.9));
+    /* Resplandor fuerte */
+    stroke: #ffffff;
+    stroke-width: 1.5;
+}
+
+.profile-img-container:hover img {
+    opacity: 0.8;
+    transition: 0.3s;
+    filter: brightness(1.1);
+}
+
+.profile-img-container label:hover {
+    transform: scale(1.1);
+    background-color: var(--accent-blue);
+}
+
+/* Botón de Guardar Cambios Estilizado */
+.btn-save-vidi {
+    background-color: #003366;
+    /* Azul Institucional */
+    color: #ffffff;
+    /* Letras Blancas */
+    padding: 10px 25px;
+    /* Tamaño reducido y elegante */
+    border: none;
+    border-radius: 8px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-block;
+    width: auto;
+    /* Evita que ocupe todo el ancho */
+    margin-top: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-save-vidi:hover {
+    background-color: #004080;
+    /* Brillo sutil al pasar el mouse */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-save-vidi:active {
+    transform: translateY(0);
+}
+
+/* Contenedor para centrar o alinear el botón */
+.button-container {
+    grid-column: span 2;
+    text-align: right;
+    /* Alineado a la derecha para un look más limpio */
+}
